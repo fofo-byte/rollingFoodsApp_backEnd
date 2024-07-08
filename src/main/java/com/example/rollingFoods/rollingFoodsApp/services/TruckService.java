@@ -11,9 +11,9 @@ import java.util.List;
 public interface TruckService {
 
     public List<FoodTruckDTO> getTrucks();
-    public FoodTruck getTruckById(int id);
-    public FoodTruck saveTruck(FoodTruck truck);
-    public void deleteTruck(int id);
-    public FoodTruck updateTruck(int id, FoodTruck truck);
-    public FoodTruck createTruck(FoodTruck truck);
+    //public FoodTruck getTruckById(int id);
+   // public FoodTruck saveTruck(FoodTruck truck);
+   // public void deleteTruck(int id);
+   // public FoodTruck updateTruck(int id, FoodTruck truck);
+   // public FoodTruck createTruck(FoodTruck truck);
 }
