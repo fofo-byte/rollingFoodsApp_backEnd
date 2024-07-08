@@ -18,7 +18,7 @@ public class FoodTruckController {
 
     @GetMapping("/foodTruck")
     public ResponseEntity <List<FoodTruck>> getFoodTruck() {
-        return ResponseEntity.ok(truckService.getTrucks());
+        return ResponseEntity.ok(truckService.);
     }
 
     @GetMapping("/foodTruck/{id}")

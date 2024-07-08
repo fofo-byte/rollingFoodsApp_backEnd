@@ -1,9 +1,9 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "food_truck")
@@ -11,19 +11,27 @@ import jakarta.persistence.Table;
 public class FoodTruck {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    private String location;
+    @Column(name = "food_type")
     private String foodType;
+    private Number length;
+    private Number width;
+    @Column(name = "created_date")
+    private Date createdDate;
 
     public FoodTruck() {
     }
 
-    public FoodTruck(Long id, String name, String description, String location, String foodType) {
+    public FoodTruck(Long id, String name, String description,String foodType, Number length, Number width) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.foodType = foodType;
+        this.length = length;
+        this.width = width;
     }
 
     public Long getId() {
@@ -50,12 +58,28 @@ public class FoodTruck {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
+    public Number getLength() {
+        return length;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLength(Number length) {
+        this.length = length;
+    }
+
+    public Number getWidth() {
+        return width;
+    }
+
+    public void setWidth(Number width) {
+        this.width = width;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getFoodType() {

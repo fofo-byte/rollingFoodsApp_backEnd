@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
-
+import com.example.rollingFoods.rollingFoodsApp.mappers.FoodTruckMapper;
+import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TruckServiceImp implements TruckService {
@@ -18,8 +20,9 @@ public class TruckServiceImp implements TruckService {
 
     public static List<FoodTruck> trucks = new ArrayList<>();
 
-    public List<FoodTruck> getTrucks() {
-        return foodTruckRepo.findAll();
+    public List<FoodTruckDTO> getTrucks() {
+        final List<FoodTruck> trucks = foodTruckRepo.findAll();
+        return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
 
     public FoodTruck getTruckById(int id) {
