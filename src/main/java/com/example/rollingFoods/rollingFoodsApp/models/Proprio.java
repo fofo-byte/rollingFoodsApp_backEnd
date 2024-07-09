@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ public class Proprio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_proprio")
     private Long id;
     @Column(name = "first_name")
     private String firstName;
@@ -23,17 +25,20 @@ public class Proprio {
     private String phoneNumber;
     @Column(name = "created_date")
     private Date createdDate;
+    private Address address;
+
 
     public Proprio() {
     }
 
-    public Proprio(Long id, String firstName, String lastName, String email, String bankNumber, String phoneNumber) {
+    public Proprio(Long id, String firstName, String lastName, String email, String bankNumber, String phoneNumber, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.bankNumber = bankNumber;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public Long getId() {
@@ -91,4 +96,14 @@ public class Proprio {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+
 }

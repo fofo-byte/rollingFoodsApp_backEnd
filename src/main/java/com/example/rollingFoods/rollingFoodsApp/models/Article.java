@@ -6,33 +6,31 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "food_truck")
-
-public class FoodTruck {
+@Table(name = "article")
+public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_food_truck")
+    @Column(name = "id_article")
     private Long id;
     private String name;
     private String description;
     @Column(name = "food_type")
     private String foodType;
-    private Float length;
-    private Float width;
-    @Column(name = "created_date")
+    @Column(name = "price_excl_tva")
+    private Float priceExclTva;
+    @Column(name = "create_at")
     private Date createdDate;
 
-    public FoodTruck() {
+    public Article() {
     }
 
-    public FoodTruck(Long id, String name, String description,String foodType, Float length, Float width) {
+    public Article(Long id, String name, String description, String foodType, Float priceExclTva) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.foodType = foodType;
-        this.length = length;
-        this.width = width;
+        this.priceExclTva = priceExclTva;
     }
 
     public Long getId() {
@@ -59,20 +57,20 @@ public class FoodTruck {
         this.description = description;
     }
 
-    public Float getLength() {
-        return length;
+    public String getFoodType() {
+        return foodType;
     }
 
-    public void setLength(Float length) {
-        this.length = length;
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
     }
 
-    public Float getWidth() {
-        return width;
+    public Float getPriceExclTva() {
+        return priceExclTva;
     }
 
-    public void setWidth(Float width) {
-        this.width = width;
+    public void setPriceExclTva(Float priceExclTva) {
+        this.priceExclTva = priceExclTva;
     }
 
     public Date getCreatedDate() {
@@ -81,13 +79,5 @@ public class FoodTruck {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
     }
 }

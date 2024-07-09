@@ -22,6 +22,12 @@ public class FoodTruckController {
         return ResponseEntity.ok(truckService.getTrucks());
     }
 
+    @PostMapping("/foodTruck")
+    public ResponseEntity <FoodTruckDTO> createFoodTruck(FoodTruckDTO foodTruckDTO) {
+        return ResponseEntity.ok(truckService.createTruck(foodTruckDTO));
+    }
+
+
 
 
 

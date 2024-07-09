@@ -28,6 +28,12 @@ public class TruckServiceImp implements TruckService {
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
 
+    public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO) {
+        final FoodTruck newTruck = mapper.dtoToFoodTruck(foodTruckDTO);
+        final FoodTruck saved = foodTruckRepo.save(newTruck);
+        return mapper.foodTruckToDto(saved);
+    }
+
 
 }
 
