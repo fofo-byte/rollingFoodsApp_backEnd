@@ -1,5 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.controllers;
 
+import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +18,19 @@ public class FoodTruckController {
     private TruckService truckService;
 
     @GetMapping("/foodTruck")
-    public ResponseEntity <List<FoodTruck>> getFoodTruck() {
+    public ResponseEntity <List<FoodTruckDTO>> getFoodTruck() {
         return ResponseEntity.ok(truckService.getTrucks());
     }
 
-    @GetMapping("/foodTruck/{id}")
-    public ResponseEntity <FoodTruck> getFoodTruckById(int id) {
-        FoodTruck truck = truckService.getTruckById(id);
-        if (truck.getId() == 0) {
-            return ResponseEntity.notFound().build();
-        }else {
-            return ResponseEntity.ok(truck);
-        }
+    @PostMapping("/foodTruck")
+    public ResponseEntity <FoodTruckDTO> createFoodTruck(FoodTruckDTO foodTruckDTO) {
+        return ResponseEntity.ok(truckService.createTruck(foodTruckDTO));
     }
 
-    @PostMapping("/foodTruck")
-    public ResponseEntity <FoodTruck> saveFoodTruck(FoodTruck truck) {
-        return ResponseEntity.ok(truckService.createTruck(truck));
-    }
+
+
+
+
 
 
 }

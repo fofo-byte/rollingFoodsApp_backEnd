@@ -1,41 +1,42 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import jakarta.persistence.*;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "food_truck")
-
-public class FoodTruck {
+@Table(name = "location_site")
+public class LocationSite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_food_truck")
+    @Column(name = "id_location_site")
     private Long id;
     private String name;
     private String description;
-    @Column(name = "food_type")
-    private String foodType;
     private Float length;
     private Float width;
-    @Column(name = "created_date")
+    private Address address;
+    @Column(name = "create_at")
     private Date createdDate;
 
-    public FoodTruck() {
+    public LocationSite() {
     }
 
-    public FoodTruck(Long id, String name, String description,String foodType, Float length, Float width) {
+    public LocationSite(Long id, String name, String description, Float length, Float width, Address address) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.foodType = foodType;
         this.length = length;
         this.width = width;
+        this.address = address;
     }
 
     public Long getId() {
+
         return id;
     }
 
@@ -75,19 +76,19 @@ public class FoodTruck {
         this.width = width;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
     }
 }
