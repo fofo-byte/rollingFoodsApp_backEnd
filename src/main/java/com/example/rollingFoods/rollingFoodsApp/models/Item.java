@@ -6,12 +6,12 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "article")
-public class Article {
+@Table(name = "item")
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_article")
+    @Column(name = "id_item")
     private Long id;
     private String name;
     private String description;
@@ -22,10 +22,18 @@ public class Article {
     @Column(name = "create_at")
     private Date createdDate;
 
-    public Article() {
+    @ManyToOne
+    @JoinColumn(name = "id_sub_categorie")
+    private SubCategorie subCategorie;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_picture", referencedColumnName = "id_picture")
+    private Picture picture;
+
+    public Item() {
     }
 
-    public Article(Long id, String name, String description, String foodType, Float priceExclTva) {
+    public Item(Long id, String name, String description, String foodType, Float priceExclTva) {
         this.id = id;
         this.name = name;
         this.description = description;
