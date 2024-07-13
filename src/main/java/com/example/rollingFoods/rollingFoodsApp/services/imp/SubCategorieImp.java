@@ -6,6 +6,7 @@ import com.example.rollingFoods.rollingFoodsApp.mappers.SubCategorieMapper;
 import com.example.rollingFoods.rollingFoodsApp.models.SubCategorie;
 import com.example.rollingFoods.rollingFoodsApp.repositories.SubCategorieRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
+import com.example.rollingFoods.rollingFoodsApp.services.SubCategorieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SubCategorieImp implements ItemService.SubCategorieService {
+public class SubCategorieImp implements SubCategorieService {
 
     @Autowired
     private SubCategorieRepo subCategorieRepo;
