@@ -3,6 +3,8 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,12 +20,14 @@ public class Item {
     @Column(name = "food_type")
     private String foodType;
     @Column(name = "price_excl_tva")
-    private Float priceExclTva;
+    private Integer priceExclTva;
     @Column(name = "create_at")
-    private Date createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
+    @Column(name = "updated_at")
+    private LocalDateTime updatedDate = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "id_sub_categorie")
+    @JoinColumn(name = "id_sub_categorie" , referencedColumnName = "id_sub_categorie")
     private SubCategorie subCategorie;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -33,7 +37,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(Long id, String name, String description, String foodType, Float priceExclTva) {
+    public Item(Long id, String name, String description, String foodType, Integer priceExclTva) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -73,19 +77,19 @@ public class Item {
         this.foodType = foodType;
     }
 
-    public Float getPriceExclTva() {
+    public Integer getPriceExclTva() {
         return priceExclTva;
     }
 
-    public void setPriceExclTva(Float priceExclTva) {
+    public void setPriceExclTva(Integer priceExclTva) {
         this.priceExclTva = priceExclTva;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 }

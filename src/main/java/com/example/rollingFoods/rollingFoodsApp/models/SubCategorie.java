@@ -17,10 +17,10 @@ public class SubCategorie {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id_categorie")
+    @JoinColumn(name = "id_categorie", referencedColumnName = "id_categorie")
     private Categorie categorie;
 
-    @OneToMany(mappedBy = "subCategorie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subCategorie", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Item> items;
 
     public SubCategorie() {

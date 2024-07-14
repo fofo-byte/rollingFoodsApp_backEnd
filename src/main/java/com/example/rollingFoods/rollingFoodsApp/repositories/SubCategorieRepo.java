@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SubCategorieRepo extends JpaRepository<SubCategorie, Long> {
-    List<SubCategorie> findByMenuId(Long menuId);
+    List<SubCategorie> findByCategorieId(Long categorieId);
 }
