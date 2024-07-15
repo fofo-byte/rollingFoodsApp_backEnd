@@ -1,13 +1,15 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
+
 @Entity
 @Table(name = "article")
-public class Article {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +24,10 @@ public class Article {
     @Column(name = "create_at")
     private Date createdDate;
 
-    public Article() {
+    public Item() {
     }
 
-    public Article(Long id, String name, String description, String foodType, Float priceExclTva) {
+    public Item(Long id, String name, String description, String foodType, Float priceExclTva) {
         this.id = id;
         this.name = name;
         this.description = description;
