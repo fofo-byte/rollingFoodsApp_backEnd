@@ -13,33 +13,26 @@ public class SubCategorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_sub_categorie")
     private Long id;
-
     private String name;
 
+    /*
     @ManyToOne
     @JoinColumn(name = "id_categorie", referencedColumnName = "id_categorie")
     private Categorie categorie;
 
     @OneToMany(mappedBy = "subCategorie", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Item> items;
-
+    */
     public SubCategorie() {
     }
 
-    public SubCategorie(Long id, String name, Categorie categorie, List<Item> items) {
+    public SubCategorie(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.categorie = categorie;
-        this.items = items;
+
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
 
     public Long getId() {
         return id;
@@ -57,11 +50,5 @@ public class SubCategorie {
         this.name = name;
     }
 
-    public Categorie getCategorie() {
-        return categorie;
-    }
 
-    public void setCategorie(Categorie categorie) {
-        this.categorie = categorie;
-    }
 }

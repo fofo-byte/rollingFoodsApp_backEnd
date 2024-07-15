@@ -47,12 +47,12 @@ public class ItemServiceImp implements ItemService {
                 (new Item());
         return mapper.itemToDto(item);
     }
-
+    /*
     public List<ItemDTO> getItemsBySubCategorieId(Long subCategorieId) {
         final List<Item> items = itemRepo.findBySubCategorieId(subCategorieId);
         return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
     }
-
+    */
     public ItemDTO addItemToSubCategorie(Long subCategorieId, ItemDTO itemDTO) {
         final Item newItem = mapper.dtoToItem(itemDTO);
         final Item saved = itemRepo.save(newItem);

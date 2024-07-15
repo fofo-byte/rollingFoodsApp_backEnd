@@ -3,7 +3,9 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "categorie")
@@ -16,22 +18,21 @@ public class Categorie {
     private String name;
     private String description;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "id_menu")
     private Menu menu;
-
+    */
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-    private List<SubCategorie> subCategories;
+    private Set<Item> items = new HashSet<>();
 
     public Categorie() {
     }
 
-    public Categorie(Long id, String name, String description, Menu menu, List<SubCategorie> subCategories) {
+    public Categorie(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.menu = menu;
-        this.subCategories = subCategories;
+
     }
 
     public Long getId() {
@@ -58,19 +59,11 @@ public class Categorie {
         this.description = description;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Set<Item> getItems() {
+        return items;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public List<SubCategorie> getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(List<SubCategorie> subCategories) {
-        this.subCategories = subCategories;
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 }

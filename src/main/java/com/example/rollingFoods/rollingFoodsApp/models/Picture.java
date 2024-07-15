@@ -14,10 +14,11 @@ public class Picture {
     private String description;
     private String url;
 
+    /*
     @OneToOne
     @JoinColumn(name = "id_item")
     private Item item;
-
+    */
     public Picture() {
     }
 

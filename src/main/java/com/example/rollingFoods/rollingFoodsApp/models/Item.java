@@ -27,23 +27,23 @@ public class Item {
     private LocalDateTime updatedDate = LocalDateTime.now();
 
     @ManyToOne
-    @JoinColumn(name = "id_sub_categorie" , referencedColumnName = "id_sub_categorie")
-    private SubCategorie subCategorie;
+    @JoinColumn(name = "id_categorie")
+    private Categorie categorie;
 
+    /*
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_picture", referencedColumnName = "id_picture")
     private Picture picture;
-
+    */
     public Item() {}
 
-    public Item(Long id, String name, String description, String foodType, Double priceExclTva, SubCategorie subCategorie, Picture picture) {
+    public Item(Long id, String name, String description, String foodType, Double priceExclTva, Categorie categorie) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.foodType = foodType;
         this.priceExclTva = priceExclTva;
-        this.subCategorie = subCategorie;
-        this.picture = picture;
+        this.categorie = categorie;
     }
 
     public Long getId() {
@@ -94,20 +94,12 @@ public class Item {
         this.createdDate = createdDate;
     }
 
-    public SubCategorie getSubCategorie() {
-        return subCategorie;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setSubCategorie(SubCategorie subCategorie) {
-        this.subCategorie = subCategorie;
-    }
-
-    public Picture getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     public LocalDateTime getUpdatedDate() {

@@ -18,16 +18,17 @@ public class Menu {
     @JoinColumn(name = "food_truck_id")
     private FoodTruck foodTruck;
 
+    /*
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<Categorie> categories;
-
+    */
     public Menu() {
     }
 
-    public Menu(Long id, FoodTruck foodTruck, List<Categorie> categories) {
+    public Menu(Long id, FoodTruck foodTruck) {
         this.id = id;
         this.foodTruck = foodTruck;
-        this.categories = categories;
+
     }
 
     public Long getId() {
@@ -46,11 +47,5 @@ public class Menu {
         this.foodTruck = foodTruck;
     }
 
-    public List<Categorie> getCategories() {
-        return categories;
-    }
 
-    public void setCategories(List<Categorie> categories) {
-        this.categories = categories;
-    }
 }

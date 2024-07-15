@@ -49,11 +49,13 @@ public class SubCategorieImp implements SubCategorieService {
                 (new SubCategorie());
         return mapper.subCategorieToDto(subCategorie);
     }
-
+    /*
     public List<SubCategorieDTO> getSubCategoriesByMenuId(Long categoryId) {
         final List<SubCategorie> subCategories = subCategorieRepo.findByCategorieId(categoryId);
         return subCategories.stream().map(mapper::subCategorieToDto).collect(Collectors.toList());
     }
+
+     */
 
     public SubCategorieDTO addSubCategorieToCategory(Long categoryId, SubCategorieDTO subCategorieDTO) {
         final SubCategorie newSubCategorie = mapper.dtoToSubCategorie(subCategorieDTO);
