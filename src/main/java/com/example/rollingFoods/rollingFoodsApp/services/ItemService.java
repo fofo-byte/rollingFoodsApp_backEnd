@@ -11,7 +11,7 @@ public interface ItemService {
 
     public List<ItemDTO> getAllItems();
     public ItemDTO getItemById(Long id);
-    public ItemDTO addItem(ItemDTO itemDTO);
+    public ItemDTO addItem(ItemDTO itemDTO, Long subCategorieId);
     public ItemDTO updateItem(ItemDTO itemDTO);
     public void deleteItem(Long id);
     public List<ItemDTO> getItemsBySubCategorieId(Long subCategorieId);

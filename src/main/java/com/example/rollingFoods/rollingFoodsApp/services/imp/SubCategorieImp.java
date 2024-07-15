@@ -28,7 +28,7 @@ public class SubCategorieImp implements SubCategorieService {
         return subCategories.stream().map(mapper::subCategorieToDto).collect(Collectors.toList());
     }
 
-    public SubCategorieDTO addSubCategorie(SubCategorieDTO subCategorieDTO) {
+    public SubCategorieDTO addSubCategorie(SubCategorieDTO subCategorieDTO, Long categoryId) {
         final SubCategorie newSubCategorie = mapper.dtoToSubCategorie(subCategorieDTO);
         final SubCategorie saved = subCategorieRepo.save(newSubCategorie);
         return mapper.subCategorieToDto(saved);

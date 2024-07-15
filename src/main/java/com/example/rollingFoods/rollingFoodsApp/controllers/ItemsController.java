@@ -28,8 +28,8 @@ public class ItemsController {
     }
 
     @PostMapping("/item")
-    public ResponseEntity <ItemDTO> createItem(ItemDTO itemDTO) {
-        return ResponseEntity.ok(itemService.addItem(itemDTO));
+    public ResponseEntity <ItemDTO> createItem(ItemDTO itemDTO, Long subCategorieId) {
+        return ResponseEntity.ok(itemService.addItem(itemDTO, subCategorieId));
     }
 
 

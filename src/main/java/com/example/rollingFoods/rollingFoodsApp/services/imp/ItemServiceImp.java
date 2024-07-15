@@ -26,9 +26,9 @@ public class ItemServiceImp implements ItemService {
         return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
     }
 
-    public ItemDTO addItem(ItemDTO itemDTO) {
-        final Item newItem = mapper.dtoToItem(itemDTO);
-        final Item saved = itemRepo.save(newItem);
+    public ItemDTO addItem(ItemDTO itemDTO, Long subCategorieId) {
+        final Item item = mapper.dtoToItem(itemDTO);
+        final Item saved = itemRepo.save(item);
         return mapper.itemToDto(saved);
     }
 

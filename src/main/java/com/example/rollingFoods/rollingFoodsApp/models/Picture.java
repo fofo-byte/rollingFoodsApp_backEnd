@@ -14,6 +14,10 @@ public class Picture {
     private String description;
     private String url;
 
+    @OneToOne
+    @JoinColumn(name = "id_item")
+    private Item item;
+
     public Picture() {
     }
 
@@ -22,6 +26,8 @@ public class Picture {
         this.description = description;
         this.url = url;
     }
+
+
 
     public Long getId() {
         return id;

@@ -20,7 +20,7 @@ public class Item {
     @Column(name = "food_type")
     private String foodType;
     @Column(name = "price_excl_tva")
-    private Integer priceExclTva;
+    private Double priceExclTva;
     @Column(name = "create_at")
     private LocalDateTime createdDate = LocalDateTime.now();
     @Column(name = "updated_at")
@@ -34,15 +34,16 @@ public class Item {
     @JoinColumn(name = "id_picture", referencedColumnName = "id_picture")
     private Picture picture;
 
-    public Item() {
-    }
+    public Item() {}
 
-    public Item(Long id, String name, String description, String foodType, Integer priceExclTva) {
+    public Item(Long id, String name, String description, String foodType, Double priceExclTva, SubCategorie subCategorie, Picture picture) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.foodType = foodType;
         this.priceExclTva = priceExclTva;
+        this.subCategorie = subCategorie;
+        this.picture = picture;
     }
 
     public Long getId() {
@@ -77,11 +78,11 @@ public class Item {
         this.foodType = foodType;
     }
 
-    public Integer getPriceExclTva() {
+    public Double getPriceExclTva() {
         return priceExclTva;
     }
 
-    public void setPriceExclTva(Integer priceExclTva) {
+    public void setPriceExclTva(Double priceExclTva) {
         this.priceExclTva = priceExclTva;
     }
 
@@ -92,4 +93,30 @@ public class Item {
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
+
+    public SubCategorie getSubCategorie() {
+        return subCategorie;
+    }
+
+    public void setSubCategorie(SubCategorie subCategorie) {
+        this.subCategorie = subCategorie;
+    }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+
 }

@@ -8,7 +8,7 @@ public interface SubCategorieService {
 
     public List<SubCategorieDTO> getAllSubCategories();
     public SubCategorieDTO getSubCategorieById(Long id);
-    public SubCategorieDTO addSubCategorie(SubCategorieDTO subCategorieDTO);
+    public SubCategorieDTO addSubCategorie(SubCategorieDTO subCategorieDTO, Long categoryId);
     public SubCategorieDTO updateSubCategorie(SubCategorieDTO subCategorieDTO);
     public void deleteSubCategorie(Long id);
     public List<SubCategorieDTO> getSubCategoriesByMenuId(Long menuId);
