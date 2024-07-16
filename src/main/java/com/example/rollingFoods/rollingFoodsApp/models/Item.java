@@ -20,7 +20,7 @@ public class Item {
     @Column(name = "food_type")
     private String foodType;
     @Column(name = "price_excl_tva")
-    private Double priceExclTva;
+    private Float priceExclTva;
     @Column(name = "create_at")
     private LocalDateTime createdDate = LocalDateTime.now();
     @Column(name = "updated_at")
@@ -37,7 +37,7 @@ public class Item {
     */
     public Item() {}
 
-    public Item(Long id, String name, String description, String foodType, Double priceExclTva, Categorie categorie) {
+    public Item(Long id, String name, String description, String foodType, Float priceExclTva, Categorie categorie) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -78,11 +78,11 @@ public class Item {
         this.foodType = foodType;
     }
 
-    public Double getPriceExclTva() {
+    public Float getPriceExclTva() {
         return priceExclTva;
     }
 
-    public void setPriceExclTva(Double priceExclTva) {
+    public void setPriceExclTva(Float priceExclTva) {
         this.priceExclTva = priceExclTva;
     }
 

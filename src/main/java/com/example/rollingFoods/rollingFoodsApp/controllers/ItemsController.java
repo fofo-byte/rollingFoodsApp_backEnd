@@ -2,12 +2,11 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
+import com.example.rollingFoods.rollingFoodsApp.models.Item;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,14 +22,22 @@ public class ItemsController {
     }
 
     @GetMapping("/items/{id}")
-    public ResponseEntity <ItemDTO> getItemById(Long id) {
-        return ResponseEntity.ok(itemService.getItemById(id));
+    public ResponseEntity <ItemDTO> getItemById(@PathVariable("id") Long itemId) {
+        return ResponseEntity.ok(itemService.getItemById(itemId));
     }
 
-    @PostMapping("/item")
-    public ResponseEntity <ItemDTO> createItem(ItemDTO itemDTO, Long subCategorieId) {
-        return ResponseEntity.ok(itemService.addItem(itemDTO, subCategorieId));
+    @GetMapping("/items/categorie/{categorieId}")
+    public ResponseEntity <List<ItemDTO>> getItemsByCategorieId(@PathVariable("categorieId") Long categorieId) {
+        return ResponseEntity.ok(itemService.getItemsByCategorieId(categorieId));
     }
+
+    @PostMapping("/items")
+    public ResponseEntity <Item> createItem(@RequestBody ItemDTO itemDTO) {
+        Item Item = itemService.addItemToCategorie(itemDTO);
+        return ResponseEntity.ok(Item);
+    }
+
+
 
 
 

@@ -9,22 +9,21 @@ public class ItemDTO
 
  {
     private String name;
-    private double price;
+    private Float price;
     private String description;
     private String foodType;
-    private Picture picture;
-    private Long subCategorieId;
+    //private Picture picture;
+    private Long categorieId;
 
     public ItemDTO() {
     }
 
-    public ItemDTO(String name, double price, String description, String foodType, Picture picture, Long subCategorieId) {
+    public ItemDTO(String name, Float price, String description, String foodType,Long categorieId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.foodType = foodType;
-        this.picture = picture;
-        this.subCategorieId = subCategorieId;
+        this.categorieId = categorieId;
     }
 
      public String getName() {
@@ -35,11 +34,11 @@ public class ItemDTO
          this.name = name;
      }
 
-     public double getPrice() {
+     public Float getPrice() {
          return price;
      }
 
-     public void setPrice(double price) {
+     public void setPrice(Float price) {
          this.price = price;
      }
 
@@ -59,19 +58,11 @@ public class ItemDTO
          this.foodType = foodType;
      }
 
-     public Picture getPicture() {
-         return picture;
+     public Long getCategorieId() {
+         return categorieId;
      }
 
-     public void setPicture(Picture picture) {
-         this.picture = picture;
-     }
-
-     public Long getSubCategorieId() {
-         return subCategorieId;
-     }
-
-     public void setSubCategorieId(Long subCategorieId) {
-         this.subCategorieId = subCategorieId;
+     public void setCategorieId(Long subCategorieId) {
+         this.categorieId = subCategorieId;
      }
  }
