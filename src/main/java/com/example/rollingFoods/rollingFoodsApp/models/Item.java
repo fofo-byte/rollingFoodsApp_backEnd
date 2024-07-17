@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "item")
+@Table(name = "article")
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_item")
+    @Column(name = "id_article")
     private Long id;
     private String name;
     private String description;
