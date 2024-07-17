@@ -2,8 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 
 
 import jakarta.persistence.*;
-
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import java.time.LocalDateTime;
 import java.util.Date;
 
