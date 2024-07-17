@@ -25,6 +25,25 @@ public class MenuServiceImp implements MenuService {
     //
     public List<MenuDTO> getAllMenus() {
         final List<Menu> menus = menuRepo.findAll();
-        return menus.stream().map(mapper::menuToDto).collect(Collectors.toList());
+        return menus.stream().map(mapper::menuToDto).toList();
     }
+
+    public MenuDTO getMenuById(Long id) {
+        final Menu menu = menuRepo.findById(id).orElse(null);
+        return mapper.menuToDto(menu);
+    }
+
+    public MenuDTO createMenu(MenuDTO menuDTO) {
+        final Menu menu = mapper.dtoToMenu(menuDTO);
+        final Menu savedMenu = menuRepo.save(menu);
+        return mapper.menuToDto(savedMenu);
+    }
+
+    /*
+    public MenuDTO getMenusByTruckId(Long foodTruckId) {
+        final Menu menu = menuRepo.findByTruckId(foodTruckId).get(0);
+        return mapper.menuToDto(menu);
+    }
+
+     */
 }

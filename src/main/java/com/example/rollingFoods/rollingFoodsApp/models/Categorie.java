@@ -1,8 +1,10 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,10 +20,13 @@ public class Categorie {
     private String name;
     private String description;
 
-    /*@ManyToOne
-    @JoinColumn(name = "id_menu")
-    private Menu menu;
-    */
+    //Relation ManyToMany avec Menu car une catégorie peut appartenir à plusieurs menus
+    @ManyToMany(mappedBy = "categories")
+    @JsonManagedReference
+    private Set<Menu> menus = new HashSet<>();
+
+
+    //Relation OneToMany avec Item car une catégorie peut contenir plusieurs items
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
     private Set<Item> items = new HashSet<>();
 
@@ -66,4 +71,14 @@ public class Categorie {
     public void setItems(Set<Item> items) {
         this.items = items;
     }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
+
+
 }

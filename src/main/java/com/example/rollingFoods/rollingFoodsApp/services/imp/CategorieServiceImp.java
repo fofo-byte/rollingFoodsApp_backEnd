@@ -23,7 +23,7 @@ public class CategorieServiceImp implements CategorieService {
 
     public List<CategorieDTO> getAllCategories() {
         final List<Categorie> categories = categorieRepo.findAll();
-        return categories.stream().map(mapper::categorieToDto).collect(Collectors.toList());
+        return categories.stream().map(mapper::categorieToDto).toList();
     }
 
 

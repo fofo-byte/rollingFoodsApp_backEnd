@@ -26,6 +26,8 @@ public class Item {
     @Column(name = "updated_at")
     private LocalDateTime updatedDate = LocalDateTime.now();
 
+
+    //Relation ManyToOne avec Categorie car un item appartient à une catégorie
     @ManyToOne
     @JoinColumn(name = "id_categorie")
     private Categorie categorie;

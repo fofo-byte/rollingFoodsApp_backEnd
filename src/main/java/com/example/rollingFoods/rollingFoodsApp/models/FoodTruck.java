@@ -1,9 +1,12 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "food_truck")
@@ -22,6 +25,10 @@ public class FoodTruck {
     private Float width;
     @Column(name = "created_date")
     private Date createdDate;
+
+    @OneToMany(mappedBy = "foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Menu> menus = new HashSet<>();
 
     public FoodTruck() {
     }
@@ -89,5 +96,12 @@ public class FoodTruck {
 
     public void setFoodType(String foodType) {
         this.foodType = foodType;
+    }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
     }
 }
