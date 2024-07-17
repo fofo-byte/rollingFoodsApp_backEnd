@@ -4,6 +4,7 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 import com.example.rollingFoods.rollingFoodsApp.dto.MenuDTO;
 import com.example.rollingFoods.rollingFoodsApp.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +19,18 @@ public class MenuController {
 
     // Get all menus
     @GetMapping("/menus")
-    public List<MenuDTO> getMenus() {
-        return menuService.getAllMenus();
+    public ResponseEntity <List<MenuDTO>> getMenus() {
+        return ResponseEntity.ok(menuService.getAllMenus());
     }
     // Get menu by id
     @GetMapping("/menus/{id}")
-    public MenuDTO getMenuById(@PathVariable("id")  Long id) {
-        return menuService.getMenuById(id);
+    public ResponseEntity <MenuDTO> getMenuById(@PathVariable("id")  Long id) {
+        return ResponseEntity.ok(menuService.getMenuById(id));
     }
     // Create menu
     @PostMapping("/menus")
-    public MenuDTO createMenu(@RequestBody MenuDTO menuDTO) {
-        return menuService.createMenu(menuDTO);
+    public ResponseEntity <MenuDTO> createMenu(@RequestBody MenuDTO menuDTO) {
+        return ResponseEntity.ok(menuService.createMenu(menuDTO));
     }
     // Get menu by truck id
 

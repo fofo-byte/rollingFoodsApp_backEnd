@@ -35,13 +35,13 @@ public class CategorieController {
     }
     // Get category by id
     @GetMapping("/categories/{id}")
-    public CategorieDTO getCategoryById(Long id) {
-        return categorieService.getCategorieById(id);
+    public ResponseEntity <CategorieDTO> getCategoryById(Long id){
+        return ResponseEntity.ok(categorieService.getCategorieById(id));
     }
     // Create category
     @PostMapping("/categorie")
-    public CategorieDTO createCategorie(@RequestBody CategorieDTO categorieDTO) {
-        return categorieService.createCategorie(categorieDTO);
+    public ResponseEntity<CategorieDTO> createCategorie(@RequestBody CategorieDTO categorieDTO) {
+        return ResponseEntity.ok(categorieService.createCategorie(categorieDTO)) ;
     }
 
 
