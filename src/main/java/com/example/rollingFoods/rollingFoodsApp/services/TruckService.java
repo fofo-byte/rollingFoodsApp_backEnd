@@ -11,11 +11,10 @@ import java.util.List;
 public interface TruckService {
 
     public List<FoodTruckDTO> getTrucks();
-
-    FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO);
+    public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO);
     //public FoodTruck getTruckById(int id);
-   // public FoodTruck saveTruck(FoodTruck truck);
-   // public void deleteTruck(int id);
-   // public FoodTruck updateTruck(int id, FoodTruck truck);
-   // public FoodTruck createTruck(FoodTruck truck);
+    // public FoodTruck saveTruck(FoodTruck truck);
+    // public void deleteTruck(int id);
+    // public FoodTruck updateTruck(int id, FoodTruck truck);
+    // public FoodTruck createTruck(FoodTruck truck);
 }

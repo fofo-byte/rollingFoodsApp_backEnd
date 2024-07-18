@@ -2,16 +2,14 @@ package com.example.rollingFoods.rollingFoodsApp.dto;
 
 import java.util.Set;
 
-public class FoodTruckDTO {
+public class MenuDTO {
 
     private Long id;
     private String name;
     private String description;
-    private Set<MenuDTO> menus;
+    private Set<CategorieDTO> categories;
 
-
-
-    public FoodTruckDTO() {
+    public MenuDTO() {
     }
 
     public Long getId() {
@@ -38,11 +36,11 @@ public class FoodTruckDTO {
         this.description = description;
     }
 
-    public Set<MenuDTO> getMenus() {
-        return menus;
+    public Set<CategorieDTO> getCategories() {
+        return categories;
     }
 
-    public void setMenus(Set<MenuDTO> menus) {
-        this.menus = menus;
+    public void setCategories(Set<CategorieDTO> categories) {
+        this.categories = categories;
     }
 }
