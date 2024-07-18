@@ -1,11 +1,10 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import java.time.LocalDateTime;
 import java.util.Date;
-
 
 @Entity
 @Table(name = "article")
@@ -22,17 +21,30 @@ public class Item {
     @Column(name = "price_excl_tva")
     private Float priceExclTva;
     @Column(name = "create_at")
-    private Date createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
+    @Column(name = "updated_at")
+    private LocalDateTime updatedDate = LocalDateTime.now();
 
-    public Item() {
-    }
 
-    public Item(Long id, String name, String description, String foodType, Float priceExclTva) {
+    //Relation ManyToOne avec Categorie car un item appartient à une catégorie
+    @ManyToOne
+    @JoinColumn(name = "id_categorie")
+    private Categorie categorie;
+
+    /*
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_picture", referencedColumnName = "id_picture")
+    private Picture picture;
+    */
+    public Item() {}
+
+    public Item(Long id, String name, String description, String foodType, Float priceExclTva, Categorie categorie) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.foodType = foodType;
         this.priceExclTva = priceExclTva;
+        this.categorie = categorie;
     }
 
     public Long getId() {
@@ -75,11 +87,30 @@ public class Item {
         this.priceExclTva = priceExclTva;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+
 }
+
