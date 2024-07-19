@@ -5,6 +5,8 @@ import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "proprio")
@@ -26,6 +28,11 @@ public class Proprio {
     @Column(name = "created_date")
     private Date createdDate;
     private Address address;
+
+    //Relation OneToMany avec LocationSite car un proprio peut avoir plusieurs locationSite
+    @OneToMany(mappedBy ="proprio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LocationSite> locationSites = new HashSet<>();
+
 
 
     public Proprio() {

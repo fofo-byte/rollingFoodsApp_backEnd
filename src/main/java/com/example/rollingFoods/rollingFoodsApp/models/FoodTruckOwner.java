@@ -4,6 +4,9 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "food_truck_owner")
 public class FoodTruckOwner {
@@ -25,6 +28,10 @@ public class FoodTruckOwner {
     @Column(name = "create_at")
     private String createdDate;
     private Address address;
+
+    //Relation OneToMany avec FoodTruck car un foodTruckOwner peut avoir plusieurs foodTruck
+    @OneToMany(mappedBy = "foodTruckOwner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FoodTruck> foodTrucks = new HashSet<>();
 
     public FoodTruckOwner() {
     }
@@ -110,5 +117,13 @@ public class FoodTruckOwner {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<FoodTruck> getFoodTrucks() {
+        return foodTrucks;
+    }
+
+    public void setFoodTrucks(Set<FoodTruck> foodTrucks) {
+        this.foodTrucks = foodTrucks;
     }
 }
