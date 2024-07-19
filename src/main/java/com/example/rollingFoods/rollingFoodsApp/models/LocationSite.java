@@ -2,6 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 
 
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import javax.xml.crypto.Data;
@@ -22,6 +23,12 @@ public class LocationSite {
     private Address address;
     @Column(name = "create_at")
     private Date createdDate;
+
+    //Relation ManyToOne avec Proprio car un locationSite appartient à un proprio
+    @ManyToOne
+    @JoinColumn(name = "id_proprio")
+    @JsonBackReference
+    private Proprio proprio;
 
     public LocationSite() {
     }
@@ -91,4 +98,10 @@ public class LocationSite {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+    public Proprio getProprio() {
+        return proprio;
+    }
+
+    public void setProprio(Proprio proprio) {this.proprio = proprio;}
 }

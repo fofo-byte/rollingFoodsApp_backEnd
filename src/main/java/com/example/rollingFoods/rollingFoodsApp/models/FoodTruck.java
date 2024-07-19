@@ -1,9 +1,12 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "food_truck")
@@ -22,6 +25,16 @@ public class FoodTruck {
     private Float width;
     @Column(name = "created_date")
     private Date createdDate;
+
+    //Relation ManyToOne avec FoodTruckOwner car un foodTruck appartient à un foodTruckOwner
+    @ManyToOne
+    @JoinColumn(name = "id_food_truck_owner")
+    @JsonBackReference
+    private FoodTruckOwner foodTruckOwner;
+
+    //Relation OneToMany avec Menu car un foodTruck peut contenir plusieurs menus
+    @OneToMany(mappedBy ="foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Menu> menus = new HashSet<>();
 
     public FoodTruck() {
     }

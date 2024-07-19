@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -18,9 +19,12 @@ public class Menu {
     private Long id;
     private String name;
 
+    //Relation ManyToOne avec FoodTruck car un menu appartient à un foodTruck
     @ManyToOne
-    @JoinColumn(name = "food_truck_id")
+    @JoinColumn(name = "id_food_truck")
+    @JsonBackReference
     private FoodTruck foodTruck;
+
 
     //Relation ManyToMany avec Categorie car un menu peut contenir plusieurs catégories
     @ManyToMany
