@@ -4,9 +4,11 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import com.example.rollingFoods.rollingFoodsApp.models.Picture;
 
 @Entity
 @Table(name = "food_truck")
@@ -24,7 +26,7 @@ public class FoodTruck {
     private Float length;
     private Float width;
     @Column(name = "created_date")
-    private Date createdDate;
+    private LocalDate createdDate = LocalDate.now();
 
     //Relation ManyToOne avec FoodTruckOwner car un foodTruck appartient à un foodTruckOwner
     @ManyToOne
@@ -36,17 +38,15 @@ public class FoodTruck {
     @OneToMany(mappedBy ="foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Menu> menus = new HashSet<>();
 
+    //Relation OneToMany avec Picture car un foodTruck peut contenir plusieurs images
+    @OneToMany(mappedBy = "foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Picture> pictures = new HashSet<>();
+
+
     public FoodTruck() {
     }
 
-    public FoodTruck(Long id, String name, String description,String foodType, Float length, Float width) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.foodType = foodType;
-        this.length = length;
-        this.width = width;
-    }
+
 
     public Long getId() {
         return id;
@@ -88,11 +88,11 @@ public class FoodTruck {
         this.width = width;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -103,4 +103,6 @@ public class FoodTruck {
     public void setFoodType(String foodType) {
         this.foodType = foodType;
     }
+
+
 }

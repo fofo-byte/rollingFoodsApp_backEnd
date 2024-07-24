@@ -8,6 +8,8 @@ public class FoodTruckDTO {
     private String name;
     private String description;
     private Set<MenuDTO> menus;
+    private Set<PictureDTO> pictures;
+
 
 
 
@@ -45,4 +47,13 @@ public class FoodTruckDTO {
     public void setMenus(Set<MenuDTO> menus) {
         this.menus = menus;
     }
+
+    public Set<PictureDTO> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(Set<PictureDTO> pictures) {
+        this.pictures = pictures;
+    }
+
 }
