@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 import com.example.rollingFoods.rollingFoodsApp.models.Picture;
 
 @Entity
@@ -40,7 +39,7 @@ public class FoodTruck {
 
     //Relation OneToMany avec Picture car un foodTruck peut contenir plusieurs images
     @OneToMany(mappedBy = "foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Picture> pictures = new HashSet<>();
+    private List<Picture> pictures = new ArrayList<>();
 
 
     public FoodTruck() {
@@ -104,5 +103,27 @@ public class FoodTruck {
         this.foodType = foodType;
     }
 
+    public FoodTruckOwner getFoodTruckOwner() {
+        return foodTruckOwner;
+    }
 
+    public void setFoodTruckOwner(FoodTruckOwner foodTruckOwner) {
+        this.foodTruckOwner = foodTruckOwner;
+    }
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
 }
