@@ -27,7 +27,7 @@ public class TruckServiceImp implements TruckService {
     @Value("D://Projet rollingFoodsApp//pictures")
     private String picturesLocation;
 
-    @Value("http://localhost/images")
+    @Value("http://10.0.2.2:8686/api")
     private String staticResourcesUrl;
 
     @Autowired
