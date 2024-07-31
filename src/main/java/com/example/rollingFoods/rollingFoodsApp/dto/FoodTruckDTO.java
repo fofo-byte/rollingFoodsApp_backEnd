@@ -1,5 +1,8 @@
 package com.example.rollingFoods.rollingFoodsApp.dto;
 
+import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
+
+import java.util.List;
 import java.util.Set;
 
 public class FoodTruckDTO {
@@ -7,8 +10,9 @@ public class FoodTruckDTO {
     private Long id;
     private String name;
     private String description;
+    private Coordinates coordinates;
     private Set<MenuDTO> menus;
-    private Set<PictureDTO> pictures;
+    private List<PictureDTO> pictures;
 
 
 
@@ -48,12 +52,20 @@ public class FoodTruckDTO {
         this.menus = menus;
     }
 
-    public Set<PictureDTO> getPictures() {
+    public List<PictureDTO> getPictures() {
         return pictures;
     }
 
-    public void setPictures(Set<PictureDTO> pictures) {
+    public void setPictures(List<PictureDTO> pictures) {
         this.pictures = pictures;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
 }

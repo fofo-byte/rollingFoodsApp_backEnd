@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -22,6 +23,7 @@ public class FoodTruck {
     private String description;
     @Column(name = "food_type")
     private String foodType;
+    private Coordinates coordinates;
     private Float length;
     private Float width;
     @Column(name = "created_date")
@@ -40,6 +42,8 @@ public class FoodTruck {
     //Relation OneToMany avec Picture car un foodTruck peut contenir plusieurs images
     @OneToMany(mappedBy = "foodTruck", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Picture> pictures = new ArrayList<>();
+
+
 
 
     public FoodTruck() {
@@ -125,5 +129,13 @@ public class FoodTruck {
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }
