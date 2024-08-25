@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "proprio")
-public class Proprio {
+@Table(name = "location_owner")
+public class LocationOwner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_proprio")
+    @Column(name = "id_location_owner")
     private Long id;
     @Column(name = "first_name")
     private String firstName;
@@ -30,15 +30,15 @@ public class Proprio {
     private Address address;
 
     //Relation OneToMany avec LocationSite car un proprio peut avoir plusieurs locationSite
-    @OneToMany(mappedBy ="proprio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy ="locationOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LocationSite> locationSites = new HashSet<>();
 
 
 
-    public Proprio() {
+    public LocationOwner() {
     }
 
-    public Proprio(Long id, String firstName, String lastName, String email, String bankNumber, String phoneNumber, Address address) {
+    public LocationOwner(Long id, String firstName, String lastName, String email, String bankNumber, String phoneNumber, Address address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
