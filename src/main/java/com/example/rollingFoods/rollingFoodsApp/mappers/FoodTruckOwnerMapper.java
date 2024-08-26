@@ -7,9 +7,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface FoodTruckOwnerMapper {
-    @Mapping(target = "id", ignore = true)
+
     FoodTruckOwner dtoToFoodTruckOwner(FoodTruckOwnerDTO dto);
+
     FoodTruckOwnerDTO foodTruckOwnerToDto(FoodTruckOwner foodTruckOwner);
 }
