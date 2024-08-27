@@ -1,23 +1,21 @@
-package com.example.rollingFoods.rollingFoodsApp.component;
+package com.example.rollingFoods.rollingFoodsApp.config;
 
 
+import com.example.rollingFoods.rollingFoodsApp.component.JwtAuthFilter;
 import com.example.rollingFoods.rollingFoodsApp.services.MyUserDetailsService;
-import com.example.rollingFoods.rollingFoodsApp.services.imp.MyUserDetailsServiceImp;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -26,9 +24,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final MyUserDetailsService myUserDetailsService;
+    private final JwtAuthFilter jwtAuthFilter;
 
-    public WebSecurityConfig(MyUserDetailsService myUserDetailsService) {
+    public WebSecurityConfig(MyUserDetailsService myUserDetailsService, JwtAuthFilter jwtAuthFilter) {
         this.myUserDetailsService = myUserDetailsService;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
 
@@ -54,12 +54,20 @@ public class WebSecurityConfig {
                         .requestMatchers("/**").authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(Customizer.withDefaults())
-
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
 
-
+    @Bean
+    // UserDetailsService is an interface that can be implemented to provide user information.
+    public UserDetailsService userDetailsService() {
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(users.username("user").password("password").roles("USER").build());
+        manager.createUser(users.username("admin").password("password").roles("USER", "ADMIN").build());
+        return manager;
+    }
 
     @Bean
     // public PasswordEncoder passwordEncoder()

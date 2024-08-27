@@ -1,5 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
+import com.example.rollingFoods.rollingFoodsApp.component.JwtTokenProvider;
 import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
 import com.example.rollingFoods.rollingFoodsApp.mappers.UserCredentialMapper;
 import com.example.rollingFoods.rollingFoodsApp.models.Role;
@@ -7,7 +8,9 @@ import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
 import com.example.rollingFoods.rollingFoodsApp.repositories.RoleRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.UserService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +29,12 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private RoleRepo roleRepo;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
 
     public UserServiceImp(PasswordEncoder passwordEncoder) {
@@ -61,9 +68,10 @@ public class UserServiceImp implements UserService {
                     throw new RuntimeException("User not found");
                 } else if (!passwordEncoder.matches(userCredentialDTO.getPassword(), user.getPassword())) {
                     throw new RuntimeException("Password incorrect");
-                } else {
-                    return "User connected";
                 }
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+                return jwtTokenProvider.generateToken(authentication);
+
             } catch (Exception e) {
                 throw new RuntimeException("Error: " + e.getMessage());
             }

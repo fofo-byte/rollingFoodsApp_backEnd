@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
 
+import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.MyUserDetailsService;

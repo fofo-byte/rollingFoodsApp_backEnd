@@ -64,22 +64,22 @@ public class UserCredential implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return this.enabled;
     }
 
 
@@ -112,7 +112,7 @@ public class UserCredential implements UserDetails {
     }
 
     public void setEnabled(Boolean enabled) {
-        enabled = enabled;
+        this.enabled = enabled;
     }
 
     public Set<Role> getRoles() {

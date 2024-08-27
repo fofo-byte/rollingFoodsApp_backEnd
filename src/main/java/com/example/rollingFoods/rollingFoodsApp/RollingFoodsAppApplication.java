@@ -1,6 +1,5 @@
 package com.example.rollingFoods.rollingFoodsApp;
 
-import com.example.rollingFoods.rollingFoodsApp.component.WebSecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
