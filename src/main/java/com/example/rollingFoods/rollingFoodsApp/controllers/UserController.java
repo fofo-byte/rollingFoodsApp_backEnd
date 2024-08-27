@@ -28,4 +28,12 @@ public class UserController {
         UserCredential registerUser = userService.registerUser(userCredentialDTO);
         return ResponseEntity.ok(registerUser);
     }
+
+    @PostMapping("/signIn")
+    ResponseEntity<String> signIn(@RequestBody @Validated UserCredentialDTO userCredentialDTO) {
+        logger.info("Signing In User: {}", userCredentialDTO);
+        String signIn = userService.signIn(userCredentialDTO);
+        logger.info("User Signed In: {}", signIn);
+        return ResponseEntity.ok(signIn);
+    }
 }

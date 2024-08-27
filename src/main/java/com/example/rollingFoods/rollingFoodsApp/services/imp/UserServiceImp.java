@@ -33,6 +33,8 @@ public class UserServiceImp implements UserService {
     public UserServiceImp(PasswordEncoder passwordEncoder) {
     }
 
+
+    //Register user method
     @Override
     public UserCredential registerUser(UserCredentialDTO userCredentialDTO) {
         if(userCredentialDTO.getPassword() ==  null || userCredentialDTO.getPassword().isEmpty()){
@@ -47,13 +49,26 @@ public class UserServiceImp implements UserService {
             return mapperUser.userToDto(user);
 
 
-
-
         }
 
     }
+    //Sign in method
+    @Override
+    public String signIn(UserCredentialDTO userCredentialDTO) {
+            try {
+                UserCredential user = userCredentialRepo.findByEmail(userCredentialDTO.getEmail());
+                if (user == null) {
+                    throw new RuntimeException("User not found");
+                } else if (!passwordEncoder.matches(userCredentialDTO.getPassword(), user.getPassword())) {
+                    throw new RuntimeException("Password incorrect");
+                } else {
+                    return "User connected";
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Error: " + e.getMessage());
+            }
 
-
+    }
 
 
 }
