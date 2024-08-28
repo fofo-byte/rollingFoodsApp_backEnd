@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
 import com.example.rollingFoods.rollingFoodsApp.component.JwtTokenProvider;
+import com.example.rollingFoods.rollingFoodsApp.controllers.CategorieController;
 import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
 import com.example.rollingFoods.rollingFoodsApp.mappers.UserCredentialMapper;
 import com.example.rollingFoods.rollingFoodsApp.models.Role;
@@ -9,6 +10,8 @@ import com.example.rollingFoods.rollingFoodsApp.repositories.RoleRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.UserService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +23,8 @@ import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
+
+    private static final Logger logger =  LoggerFactory.getLogger(CategorieController.class);
 
     @Autowired
     private UserCredentialRepo userCredentialRepo;
@@ -55,13 +60,13 @@ public class UserServiceImp implements UserService {
             userCredentialRepo.save(user);
             return mapperUser.userToDto(user);
 
-
         }
 
     }
     //Sign in method
     @Override
     public String signIn(UserCredentialDTO userCredentialDTO) {
+
             try {
                 UserCredential user = userCredentialRepo.findByEmail(userCredentialDTO.getEmail());
                 if (user == null) {
@@ -70,7 +75,9 @@ public class UserServiceImp implements UserService {
                     throw new RuntimeException("Password incorrect");
                 }
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
-                return jwtTokenProvider.generateToken(authentication);
+                logger.info("User {} has signed in", user.getUsername());
+                String token =  jwtTokenProvider.generateToken(authentication);
+                return "User " + user.getUsername() + " has signed in with token: " + token;
 
             } catch (Exception e) {
                 throw new RuntimeException("Error: " + e.getMessage());
