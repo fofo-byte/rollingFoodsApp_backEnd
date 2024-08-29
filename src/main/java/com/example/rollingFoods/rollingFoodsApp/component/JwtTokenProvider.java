@@ -2,6 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.component;
 
 
 import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtTokenProvider {
@@ -19,12 +23,18 @@ public class JwtTokenProvider {
     // Generate token
     public String generateToken(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", userDetails.getUsername());
+        claims.put("email", userDetails.getUsername());
+        claims.put("roles", userDetails.getAuthorities());
+
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
+
     }
 
     // Validate token
@@ -37,9 +47,23 @@ public class JwtTokenProvider {
         }
     }
 
-    // Get username from token
-    public String getUsernameFromToken(String token){
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
+    // Get username email and roles from token
+    public Map<String, Object> getTokens(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = claims.get("username", String.class);
+        String email = claims.get("email", String.class);
+        List<String> roles = (List<String>) claims.get("roles");
+
+        Map<String, Object> tokenDetails = new HashMap<>();
+        tokenDetails.put("username", username);
+        tokenDetails.put("email", email);
+        tokenDetails.put("roles", roles);
+
+        return tokenDetails;
     }
 
 }

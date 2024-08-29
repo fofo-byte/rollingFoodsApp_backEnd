@@ -6,7 +6,7 @@ import jakarta.mail.search.SearchTerm;
 import java.util.Set;
 
 public class UserCredentialDTO {
-
+    private Long id;
     private String username;
     private String email;
     private String password;
@@ -65,5 +65,13 @@ public class UserCredentialDTO {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
