@@ -13,12 +13,15 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.BrokenBarrierException;
 
 
 @Service
@@ -70,14 +73,15 @@ public class UserServiceImp implements UserService {
             try {
                 UserCredential user = userCredentialRepo.findByEmail(userCredentialDTO.getEmail());
                 if (user == null) {
-                    throw new RuntimeException("User not found");
+                    throw new UsernameNotFoundException("User not found");
                 } else if (!passwordEncoder.matches(userCredentialDTO.getPassword(), user.getPassword())) {
-                    throw new RuntimeException("Password incorrect");
+                    throw new BadCredentialsException("Invalid password");
                 }
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
                 logger.info("User {} has signed in", user.getUsername());
                 String token =  jwtTokenProvider.generateToken(authentication);
-                return "User " + user.getUsername() + " has signed in with token: " + token;
+                //return json token
+                return "{\"token\": \"" + token + "\"}";
 
             } catch (Exception e) {
                 throw new RuntimeException("Error: " + e.getMessage());

@@ -65,10 +65,10 @@ public class UserController {
         if (principal instanceof UserDetails) {
                 UserDetails userDetails = (UserDetails) principal;
             String username = userDetails.getUsername();
-            String password = userDetails.getPassword();
             logger.info("Username: {}", username);
-            logger.info("Password: {}", password);
-            return "Welcome to Rolling Foods " + username + " " + password;
+            logger.info("Email: {}", userDetails);
+            logger.info("Roles: {}", userDetails.getAuthorities());
+            return "Welcome to Rolling Foods " + username + " " + userDetails.getAuthorities()+ " " + userDetails;
 
         } else if (principal instanceof String){
             String username = (String) principal;
