@@ -12,7 +12,7 @@ import java.util.List;
 public interface TruckService {
 
     public List<FoodTruckDTO> getTrucks();
-    public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO, List <MultipartFile> files);
+    public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO, List <MultipartFile> files, Long id);
     public FoodTruckDTO findTruckById(Long id);
     // public FoodTruck saveTruck(FoodTruck truck);
     // public void deleteTruck(int id);

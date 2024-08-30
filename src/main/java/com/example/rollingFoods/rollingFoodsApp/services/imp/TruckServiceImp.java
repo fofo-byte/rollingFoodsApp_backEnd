@@ -3,7 +3,9 @@ package com.example.rollingFoods.rollingFoodsApp.services.imp;
 import com.example.rollingFoods.rollingFoodsApp.mappers.FoodTruckMapper;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
+import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
 import com.example.rollingFoods.rollingFoodsApp.models.Picture;
+import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +33,9 @@ public class TruckServiceImp implements TruckService {
     private String staticResourcesUrl;
 
     @Autowired
+    private FoodTruckOwnerRepo foodTruckOwnerRepo;
+
+    @Autowired
     private FoodTruckRepo foodTruckRepo;
 
     @Autowired
@@ -44,8 +49,9 @@ public class TruckServiceImp implements TruckService {
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
     // Create food truck
-    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final List<MultipartFile> files) {
+    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final List<MultipartFile> files, final Long id) {
         final FoodTruck truck = mapper.dtoToFoodTruck(foodTruckDTO);
+        FoodTruckOwner owner = foodTruckOwnerRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Owner not found with id: " + id));
         final FoodTruck saved = foodTruckRepo.save(truck);
         saved.setPictures(new ArrayList<Picture>());
         final Path locationPath = Paths.get(picturesLocation, String.valueOf(saved.getId()));
