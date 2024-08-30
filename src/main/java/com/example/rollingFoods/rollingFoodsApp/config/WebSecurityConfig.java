@@ -43,7 +43,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signIn").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/foodTruck").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/registerFoodTruckOwner").permitAll()
                         .requestMatchers(HttpMethod.GET, "/foodTruck").permitAll()
                         .requestMatchers(HttpMethod.GET, "/foodTruck/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/*/subscription/confirm").permitAll()

@@ -22,10 +22,11 @@ public class JwtTokenProvider {
 
     // Generate token
     public String generateToken(Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserCredential userDetails = (UserCredential) authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", userDetails.getId());
         claims.put("username", userDetails.getUsername());
-        claims.put("email", userDetails.getUsername());
+        claims.put("email", userDetails.getEmail());
         claims.put("roles", userDetails.getAuthorities());
 
         return Jwts.builder()
@@ -54,11 +55,13 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
+        Long id = claims.get("id", Long.class);
         String username = claims.get("username", String.class);
         String email = claims.get("email", String.class);
         List<String> roles = (List<String>) claims.get("roles");
 
         Map<String, Object> tokenDetails = new HashMap<>();
+        tokenDetails.put("id", id);
         tokenDetails.put("username", username);
         tokenDetails.put("email", email);
         tokenDetails.put("roles", roles);

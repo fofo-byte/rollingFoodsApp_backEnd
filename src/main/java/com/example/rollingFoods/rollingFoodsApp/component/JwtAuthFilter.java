@@ -50,7 +50,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 Map<String, Object> claims = jwtTokenProvider.getTokens(jwt);
                 String username = (String) claims.get("username");
                 String email = (String) claims.get("email");
-                //List<String> roles = (List<String>) claims.get("roles");
                 List<String> roles = new ArrayList<>();
                 Object rolesObject = claims.get("roles");
                 if(rolesObject instanceof List){

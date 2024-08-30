@@ -64,7 +64,6 @@ public class UserServiceImp implements UserService {
             return mapperUser.userToDto(user);
 
         }
-
     }
     //Sign in method
     @Override
