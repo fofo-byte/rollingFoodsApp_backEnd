@@ -1,6 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.dto;
 
-import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +10,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class FoodTruckOwnerDTO  extends UserDTO{
-
-    private String companyName;
-    private String tva;
-    private String bankNumber;
-
+public class UserDTO {
+    private Long id;
+    private String firstname;
+    private String lastname;
+    private String phoneNumber;
+    private AddressDTO address;
+    private String createdDate;
 
 
 }

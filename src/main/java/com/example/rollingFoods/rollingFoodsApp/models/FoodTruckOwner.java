@@ -18,30 +18,30 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "food_truck_owner")
-public class FoodTruckOwner extends UserCredential {
+public class FoodTruckOwner extends User {
 
-    @Column(name = "first_name")
-    private String firstname;
-    @Column(name = "last_name")
-    private String lastname;
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "company_name")
+    private String companyName;
+    @Column(name = "tva_number")
     private String tva;
     @Column(name = "bank_number")
     private String bankNumber;
-    @Column(name = "create_at")
-    private String createdDate;
-    private Address address;
+
+
 
     //Relation OneToMany avec FoodTruck car un foodTruckOwner peut avoir plusieurs foodTruck
     @OneToMany(mappedBy = "foodTruckOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FoodTruck> foodTrucks = new HashSet<>();
 
+    //Relation ManyToOne avec UserCredential car un foodTruckOwner appartient à un UserCredential
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserCredential userCredential;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return super.getAuthorities();
-    }
+
+
+
+
 
 
 
