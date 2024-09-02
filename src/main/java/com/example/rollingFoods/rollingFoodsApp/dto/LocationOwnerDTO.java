@@ -10,15 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocationOwnerDTO{
+public class LocationOwnerDTO extends UserDTO{
 
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private Address address;
-
-
-
+    private String bankNumber;
 }

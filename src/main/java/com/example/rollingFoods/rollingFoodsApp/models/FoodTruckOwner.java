@@ -18,24 +18,16 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "food_truck_owner")
-public class FoodTruckOwner {
+public class FoodTruckOwner extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_food_truck_owner")
-    private Long id;
-    @Column(name = "first_name")
-    private String firstname;
-    @Column(name = "last_name")
-    private String lastname;
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "company_name")
+    private String companyName;
+    @Column(name = "tva_number")
     private String tva;
     @Column(name = "bank_number")
     private String bankNumber;
-    @Column(name = "create_at")
-    private String createdDate;
-    private Address address;
+
+
 
     //Relation OneToMany avec FoodTruck car un foodTruckOwner peut avoir plusieurs foodTruck
     @OneToMany(mappedBy = "foodTruckOwner", cascade = CascadeType.ALL, orphanRemoval = true)

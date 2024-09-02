@@ -33,6 +33,10 @@ public class UserCredential implements UserDetails {
     @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FoodTruckOwner> foodTruckOwners = new HashSet<>();
 
+    //Relation OneToMany avec Customer car un user peut avoir plusieurs customer
+    @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Customer> customers = new HashSet<>();
+
 
 
 
