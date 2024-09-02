@@ -33,6 +33,11 @@ public class LocationOwner {
     @OneToMany(mappedBy ="locationOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LocationSite> locationSites = new HashSet<>();
 
+    //Relation ManyToOne avec UserCredential car un locationOwner appartient à un UserCredential
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserCredential userCredential;
+
 
 
     public LocationOwner() {

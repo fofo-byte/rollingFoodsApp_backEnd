@@ -18,8 +18,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "food_truck_owner")
-public class FoodTruckOwner extends UserCredential {
+public class FoodTruckOwner {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_food_truck_owner")
+    private Long id;
     @Column(name = "first_name")
     private String firstname;
     @Column(name = "last_name")
@@ -37,11 +41,15 @@ public class FoodTruckOwner extends UserCredential {
     @OneToMany(mappedBy = "foodTruckOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FoodTruck> foodTrucks = new HashSet<>();
 
+    //Relation ManyToOne avec UserCredential car un foodTruckOwner appartient à un UserCredential
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserCredential userCredential;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return super.getAuthorities();
-    }
+
+
+
+
 
 
 

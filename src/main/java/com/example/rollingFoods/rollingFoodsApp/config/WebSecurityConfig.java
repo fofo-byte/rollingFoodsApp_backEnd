@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/signIn").permitAll()
                         .requestMatchers(HttpMethod.POST, "/registerFoodTruckOwner").permitAll()
                         .requestMatchers(HttpMethod.GET, "/foodTruck").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/foodTruck/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/foodTruck/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/*/subscription/confirm").permitAll()
                         .requestMatchers(HttpMethod.POST, "/resend-verification-email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()

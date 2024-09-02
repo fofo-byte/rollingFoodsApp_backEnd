@@ -9,7 +9,7 @@ import java.util.*;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "user_credentials")
 public class UserCredential implements UserDetails {
 
     @Id
@@ -24,8 +24,19 @@ public class UserCredential implements UserDetails {
     private Boolean enabled = false;
 
 
+    //Relation OneToMany avec LocationOwner car un user peut avoir plusieurs locationOwner
+    @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LocationOwner> locationOwners = new HashSet<>();
 
 
+    //Relation OneToMany avec FoodTruckOwner car un user peut avoir plusieurs foodTruckOwner
+    @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FoodTruckOwner> foodTruckOwners = new HashSet<>();
+
+
+
+
+    //Relation ManyToMany avec Role car un user peut avoir plusieurs roles
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -122,6 +133,25 @@ public class UserCredential implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<LocationOwner> getLocationOwners() {
+        return locationOwners;
+    }
+
+    public void setLocationOwners(Set<LocationOwner> locationOwners) {
+        this.locationOwners = locationOwners;
+    }
+
+    public Set<FoodTruckOwner> getFoodTruckOwners() {
+        return foodTruckOwners;
+    }
+
+    public void setFoodTruckOwners(Set<FoodTruckOwner> foodTruckOwners) {
+        this.foodTruckOwners = foodTruckOwners;
+    }
+
+
+
 
 
 

@@ -7,6 +7,7 @@ import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
 import com.example.rollingFoods.rollingFoodsApp.models.Picture;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
+import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class TruckServiceImp implements TruckService {
     private String staticResourcesUrl;
 
     @Autowired
+    private UserCredentialRepo userCredentialRepo;
+
+    @Autowired
     private FoodTruckOwnerRepo foodTruckOwnerRepo;
 
     @Autowired
@@ -42,6 +46,7 @@ public class TruckServiceImp implements TruckService {
     private FoodTruckMapper mapper;
 
     public static List<FoodTruck> trucks = new ArrayList<>();
+
 
     // Get all food trucks
     public List<FoodTruckDTO> getTrucks() {
