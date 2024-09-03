@@ -1,10 +1,14 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
+import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckOwnerDTO;
 import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
+import com.example.rollingFoods.rollingFoodsApp.mappers.AddressMapper;
 import com.example.rollingFoods.rollingFoodsApp.mappers.FoodTruckOwnerMapper;
 import com.example.rollingFoods.rollingFoodsApp.mappers.UserCredentialMapper;
+import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
 import com.example.rollingFoods.rollingFoodsApp.models.Role;
 import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
+import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.RoleRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
@@ -18,6 +22,10 @@ import java.util.Set;
 
 @Service
 public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
+
+    //Injecting the AddressMapper
+    @Autowired
+    private AddressMapper addressMapper;
 
     // Injecting the FoodTruckOwnerRepo
     @Autowired
@@ -60,6 +68,26 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
             return mapperUser.userToDto(user);
 
         }
+    }
+
+    // add a food truck owner to the database
+    @Override
+    public FoodTruckOwnerDTO addFoodTruckOwner(Long userCredentialId, FoodTruckOwnerDTO foodTruckOwnerDTO) {
+        UserCredential userCredential = userCredentialRepo.findById(userCredentialId).orElseThrow(() -> new RuntimeException("User not found with id: " + userCredentialId));
+        //Convert AddressDTO to Address
+        Address address = addressMapper.dtoToAddress(foodTruckOwnerDTO.getAddress());
+
+        FoodTruckOwner foodTruckOwner = new FoodTruckOwner();
+        foodTruckOwner.setFirstname(foodTruckOwnerDTO.getFirstname());
+        foodTruckOwner.setLastname(foodTruckOwnerDTO.getLastname());
+        foodTruckOwner.setPhoneNumber(foodTruckOwnerDTO.getPhoneNumber());
+        foodTruckOwner.setBankNumber(foodTruckOwnerDTO.getBankNumber());
+        foodTruckOwner.setTva(foodTruckOwnerDTO.getTva());
+        foodTruckOwner.setCompanyName(foodTruckOwnerDTO.getCompanyName());
+        foodTruckOwner.setAddress(address);
+        foodTruckOwner.setUserCredential(userCredential);
+        FoodTruckOwner foodTruckOwnerSave =  foodTruckOwnerRepo.save(foodTruckOwner);
+        return mapper.foodTruckOwnerToDto(foodTruckOwnerSave);
     }
 
 }
