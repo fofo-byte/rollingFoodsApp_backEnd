@@ -3,6 +3,7 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckOwnerDTO;
 import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
+import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
 import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
 import com.example.rollingFoods.rollingFoodsApp.services.FoodTruckOwnerService;
 import org.slf4j.Logger;
@@ -32,7 +33,11 @@ public class FoodTruckOwnerController {
         return ResponseEntity.ok(registerFoodTruckOwner);
     }
 
-
-
-
+    // add a food truck owner to the database
+    @PostMapping("/addFoodTruckOwner")
+    public ResponseEntity<FoodTruckOwnerDTO> addFoodTruckOwner(@RequestParam Long userCredentialId, @RequestBody FoodTruckOwnerDTO foodTruckOwnerDTO) {
+        logger.info("Adding FoodTruckOwner: {}", foodTruckOwnerDTO);
+        FoodTruckOwnerDTO addFoodTruckOwner = foodTruckOwnerService.addFoodTruckOwner(userCredentialId, foodTruckOwnerDTO);
+        return ResponseEntity.ok(addFoodTruckOwner);
+    }
 }
