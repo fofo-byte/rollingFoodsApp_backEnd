@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.models;
 
 
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -21,11 +22,13 @@ public class FoodTruck {
     private Long id;
     private String name;
     private String description;
-    @Column(name = "food_type")
-    private String foodType;
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
+    private String speciality;
     private Coordinates coordinates;
     private Float length;
     private Float width;
+    private Boolean isOpen = false;
     @Column(name = "created_date")
     private LocalDate createdDate = LocalDate.now();
 
@@ -47,6 +50,22 @@ public class FoodTruck {
 
 
     public FoodTruck() {
+    }
+
+    public FoodTruck(Long id, String name, String description, FoodType foodType, String speciality, Coordinates coordinates, Float length, Float width, Boolean isOpen, LocalDate createdDate, FoodTruckOwner foodTruckOwner, Set<Menu> menus, List<Picture> pictures) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.foodType = foodType;
+        this.speciality = speciality;
+        this.coordinates = coordinates;
+        this.length = length;
+        this.width = width;
+        this.isOpen = isOpen;
+        this.createdDate = createdDate;
+        this.foodTruckOwner = foodTruckOwner;
+        this.menus = menus;
+        this.pictures = pictures;
     }
 
 
@@ -99,14 +118,6 @@ public class FoodTruck {
         this.createdDate = createdDate;
     }
 
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
-    }
-
     public FoodTruckOwner getFoodTruckOwner() {
         return foodTruckOwner;
     }
@@ -137,5 +148,29 @@ public class FoodTruck {
 
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public FoodType getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(FoodType foodType) {
+        this.foodType = foodType;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public Boolean getOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(Boolean open) {
+        isOpen = open;
     }
 }

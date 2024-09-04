@@ -21,7 +21,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,35 +56,49 @@ public class TruckServiceImp implements TruckService {
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
     // Create food truck
-    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final List<MultipartFile> files, final Long id) {
-        final FoodTruck truck = mapper.dtoToFoodTruck(foodTruckDTO);
-        FoodTruckOwner owner = foodTruckOwnerRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Owner not found with id: " + id));
-        final FoodTruck saved = foodTruckRepo.save(truck);
-        saved.setPictures(new ArrayList<Picture>());
-        final Path locationPath = Paths.get(picturesLocation, String.valueOf(saved.getId()));
+    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final List<MultipartFile> files, final Long foodTruckOwnerId) {
+        final FoodTruckOwner foodTruckOwner = foodTruckOwnerRepo.findById(foodTruckOwnerId).orElseThrow(() -> new EntityNotFoundException("Food truck owner not found with id: " + foodTruckOwnerId));
+        FoodTruck foodTruck = new FoodTruck();
+        foodTruck.setName(foodTruckDTO.getName());
+        foodTruck.setDescription(foodTruckDTO.getDescription());
+        foodTruck.setSpeciality(foodTruckDTO.getSpeciality());
+        foodTruck.setFoodType(foodTruckDTO.getFoodType());
+        foodTruck.setCoordinates(foodTruckDTO.getCoordinates());
+        foodTruck.setFoodTruckOwner(foodTruckOwner);
 
+        final FoodTruck savedFoodTruck = foodTruckRepo.save(foodTruck);
+
+        final Path locationPath = Paths.get(picturesLocation + "/pictures/" + savedFoodTruck.getId());
         try {
-            final Path createDirectories = Files.createDirectory(locationPath);
 
-            files.forEach(file -> {
-                try {
-                    final Path imagePath = createDirectories.resolve(Optional.ofNullable(file.getOriginalFilename()).orElseThrow());
+            Logger.getGlobal().info("Saving pictures to: " + locationPath);
+            // Create directory if not exists
+            Files.createDirectories(locationPath);
 
-                    file.transferTo(imagePath.toFile());
-                    final Picture picture = new Picture();
-                    picture.setLocation(staticResourcesUrl + "/pictures/" + saved.getId() + "/" + imagePath.getFileName().toString());
-                    picture.setName(imagePath.getFileName().toString());
-                    picture.setFoodTruck(saved);
-                    saved.getPictures().add(picture);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            for (MultipartFile file : files) {
+                if (file.isEmpty() || file.getOriginalFilename() == null) {
+                    throw new RuntimeException("Invalid file detected.");
                 }
-            });
-            final FoodTruck savedWithPictures = foodTruckRepo.save(saved);
-            return mapper.foodTruckToDto(savedWithPictures);
+                Path imagePath = locationPath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
+                file.transferTo(imagePath.toFile());
+
+                Picture picture = new Picture();
+                picture.setLocation("/pictures/" + savedFoodTruck.getId() + "/" + imagePath.getFileName());
+                picture.setName(imagePath.getFileName().toString());
+                picture.setFoodTruck(savedFoodTruck);
+
+                savedFoodTruck.getPictures().add(picture);
+            }
+
+
+            foodTruckRepo.save(savedFoodTruck);
+
         } catch (Exception e) {
+            Logger.getGlobal().severe("Error while saving pictures: " + e.getMessage());
             throw new RuntimeException("Error while saving pictures");
         }
+
+        return mapper.foodTruckToDto(savedFoodTruck);
     }
 
 

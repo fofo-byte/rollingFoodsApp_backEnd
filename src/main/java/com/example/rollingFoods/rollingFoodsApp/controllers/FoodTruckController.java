@@ -37,20 +37,20 @@ public class FoodTruckController {
         return truckService.findTruckById(id);
     }
 
-    /*
 
-    // Create food truck
-    @PostMapping(value = "/foodTruck/{id}", consumes = "multipart/form-data")
+
+     //Create food truck
+    @PostMapping(value = "/addFoodTruck", consumes = "multipart/form-data")
     public ResponseEntity <FoodTruckDTO> createFoodTruck(
-            @PathVariable Long id,
+            @RequestParam("ownerId") Long ownerId,
             @RequestPart("foodTruck") MultipartFile foodTruckFile,
             @RequestPart("files") List <MultipartFile> files)throws IOException {
         FoodTruckDTO foodTruck = objectMapper.readValue(foodTruckFile.getInputStream(), FoodTruckDTO.class);
-        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck, files, id);
+        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck, files, ownerId);
         return ResponseEntity.created(URI.create("/foodTruck/" + createdFoodTruck.getId())).build();
     }
 
-    */
+
 
 
 
