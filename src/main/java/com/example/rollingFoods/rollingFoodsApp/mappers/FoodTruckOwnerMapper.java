@@ -13,4 +13,6 @@ public interface FoodTruckOwnerMapper {
     FoodTruckOwner dtoToFoodTruckOwner(FoodTruckOwnerDTO dto);
 
     FoodTruckOwnerDTO foodTruckOwnerToDto(FoodTruckOwner foodTruckOwner);
+
+
 }

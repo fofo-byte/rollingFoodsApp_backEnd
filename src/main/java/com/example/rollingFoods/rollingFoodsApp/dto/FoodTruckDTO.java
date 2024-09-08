@@ -1,5 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.dto;
 
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
 
 import java.util.List;
@@ -10,7 +11,9 @@ public class FoodTruckDTO {
     private Long id;
     private String name;
     private String description;
+    private String speciality;
     private Coordinates coordinates;
+    private FoodType foodType;
     private Set<MenuDTO> menus;
     private List<PictureDTO> pictures;
 
@@ -68,4 +71,19 @@ public class FoodTruckDTO {
         this.coordinates = coordinates;
     }
 
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public FoodType getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(FoodType foodType) {
+        this.foodType = foodType;
+    }
 }
