@@ -90,4 +90,9 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
         return mapper.foodTruckOwnerToDto(foodTruckOwnerSave);
     }
 
+    @Override
+    public Long findFoodTruckOwnerIdByUserCredentialId(Long userCredentialId) {
+        return foodTruckOwnerRepo.findFoodTruckOwnerIdByUserCredentialId(userCredentialId);
+    }
+
 }

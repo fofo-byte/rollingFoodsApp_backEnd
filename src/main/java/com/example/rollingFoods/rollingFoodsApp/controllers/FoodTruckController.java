@@ -43,10 +43,10 @@ public class FoodTruckController {
     @PostMapping(value = "/addFoodTruck", consumes = "multipart/form-data")
     public ResponseEntity <FoodTruckDTO> createFoodTruck(
             @RequestParam("ownerId") Long ownerId,
-            @RequestPart("foodTruck") MultipartFile foodTruckFile,
-            @RequestPart("files") List <MultipartFile> files)throws IOException {
+            @RequestPart("foodTruck") MultipartFile foodTruckFile
+            )throws IOException {
         FoodTruckDTO foodTruck = objectMapper.readValue(foodTruckFile.getInputStream(), FoodTruckDTO.class);
-        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck, files, ownerId);
+        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck,ownerId);
         return ResponseEntity.created(URI.create("/foodTruck/" + createdFoodTruck.getId())).build();
     }
 

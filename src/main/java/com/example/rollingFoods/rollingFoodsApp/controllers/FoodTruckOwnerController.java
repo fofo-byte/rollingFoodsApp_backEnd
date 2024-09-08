@@ -40,4 +40,12 @@ public class FoodTruckOwnerController {
         FoodTruckOwnerDTO addFoodTruckOwner = foodTruckOwnerService.addFoodTruckOwner(userCredentialId, foodTruckOwnerDTO);
         return ResponseEntity.ok(addFoodTruckOwner);
     }
+
+    //get FoodTruckOwnerId by userCredentialId
+    @GetMapping("/findFoodTruckOwnerIdByUserCredentialId")
+    public ResponseEntity<Long> findFoodTruckOwnerIdByUserCredentialId(@RequestParam Long userCredentialId) {
+        logger.info("Finding FoodTruckOwnerId by userCredentialId: {}", userCredentialId);
+        Long findFoodTruckOwnerIdByUserCredentialId = foodTruckOwnerService.findFoodTruckOwnerIdByUserCredentialId(userCredentialId);
+        return ResponseEntity.ok(findFoodTruckOwnerIdByUserCredentialId);
+    }
 }

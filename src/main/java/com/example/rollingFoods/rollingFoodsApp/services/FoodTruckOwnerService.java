@@ -15,4 +15,7 @@ public interface FoodTruckOwnerService {
 
     // add a food truck owner to the database
     FoodTruckOwnerDTO addFoodTruckOwner(Long userCredentialId, FoodTruckOwnerDTO foodTruckOwnerDTO);
+
+    //get FoodTruckOwnerId by userCredentialId
+    Long findFoodTruckOwnerIdByUserCredentialId(Long userCredentialId);
 }

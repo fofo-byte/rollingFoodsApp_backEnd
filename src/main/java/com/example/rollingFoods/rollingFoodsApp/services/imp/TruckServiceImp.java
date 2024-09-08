@@ -56,7 +56,7 @@ public class TruckServiceImp implements TruckService {
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
     // Create food truck
-    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final List<MultipartFile> files, final Long foodTruckOwnerId) {
+    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO,final Long foodTruckOwnerId) {
         final FoodTruckOwner foodTruckOwner = foodTruckOwnerRepo.findById(foodTruckOwnerId).orElseThrow(() -> new EntityNotFoundException("Food truck owner not found with id: " + foodTruckOwnerId));
         FoodTruck foodTruck = new FoodTruck();
         foodTruck.setName(foodTruckDTO.getName());
@@ -67,36 +67,6 @@ public class TruckServiceImp implements TruckService {
         foodTruck.setFoodTruckOwner(foodTruckOwner);
 
         final FoodTruck savedFoodTruck = foodTruckRepo.save(foodTruck);
-
-        final Path locationPath = Paths.get(picturesLocation + "/pictures/" + savedFoodTruck.getId());
-        try {
-
-            Logger.getGlobal().info("Saving pictures to: " + locationPath);
-            // Create directory if not exists
-            Files.createDirectories(locationPath);
-
-            for (MultipartFile file : files) {
-                if (file.isEmpty() || file.getOriginalFilename() == null) {
-                    throw new RuntimeException("Invalid file detected.");
-                }
-                Path imagePath = locationPath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
-                file.transferTo(imagePath.toFile());
-
-                Picture picture = new Picture();
-                picture.setLocation("/pictures/" + savedFoodTruck.getId() + "/" + imagePath.getFileName());
-                picture.setName(imagePath.getFileName().toString());
-                picture.setFoodTruck(savedFoodTruck);
-
-                savedFoodTruck.getPictures().add(picture);
-            }
-
-
-            foodTruckRepo.save(savedFoodTruck);
-
-        } catch (Exception e) {
-            Logger.getGlobal().severe("Error while saving pictures: " + e.getMessage());
-            throw new RuntimeException("Error while saving pictures");
-        }
 
         return mapper.foodTruckToDto(savedFoodTruck);
     }
