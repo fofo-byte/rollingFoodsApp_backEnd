@@ -25,6 +25,7 @@ public class FoodTruck {
     @Enumerated(EnumType.STRING)
     private FoodType foodType;
     private String speciality;
+    private String profileImage;
     private Coordinates coordinates;
     private Float length;
     private Float width;
@@ -52,7 +53,7 @@ public class FoodTruck {
     public FoodTruck() {
     }
 
-    public FoodTruck(Long id, String name, String description, FoodType foodType, String speciality, Coordinates coordinates, Float length, Float width, Boolean isOpen, LocalDate createdDate, FoodTruckOwner foodTruckOwner, Set<Menu> menus, List<Picture> pictures) {
+    public FoodTruck(Long id, String name, String description, FoodType foodType, String speciality, Coordinates coordinates, Float length, Float width, Boolean isOpen, LocalDate createdDate, FoodTruckOwner foodTruckOwner, Set<Menu> menus, List<Picture> pictures, String profileImage) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,6 +67,7 @@ public class FoodTruck {
         this.foodTruckOwner = foodTruckOwner;
         this.menus = menus;
         this.pictures = pictures;
+        this.profileImage = profileImage;
     }
 
 
@@ -172,5 +174,13 @@ public class FoodTruck {
 
     public void setOpen(Boolean open) {
         isOpen = open;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }
