@@ -6,6 +6,8 @@ public class PictureDTO {
     private String name;
     private String location;
 
+
+
     public PictureDTO() {
     }
 

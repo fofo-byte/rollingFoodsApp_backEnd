@@ -50,6 +50,20 @@ public class FoodTruckController {
         return ResponseEntity.created(URI.create("/foodTruck/" + createdFoodTruck.getId())).build();
     }
 
+    // Update food truck
+    @PutMapping("/updateFoodTruck/{id}")
+    public ResponseEntity <FoodTruckDTO> updateFoodTruck(@PathVariable Long id, @RequestBody FoodTruckDTO foodTruckDTO) {
+        return ResponseEntity.ok(truckService.updateTruck(id, foodTruckDTO));
+    }
+
+
+
+    // Get food truck by owner id
+    @GetMapping("/foodTruckByOwnerId/{ownerId}")
+    public ResponseEntity <FoodTruckDTO> getFoodTruckByOwnerId(@PathVariable Long ownerId) {
+        return ResponseEntity.ok(truckService.getTruckByOwnerId(ownerId));
+    }
+
 
 
 

@@ -14,6 +14,7 @@ public class FoodTruckDTO {
     private String speciality;
     private Coordinates coordinates;
     private FoodType foodType;
+    private String profileImage;
     private Set<MenuDTO> menus;
     private List<PictureDTO> pictures;
 
@@ -85,5 +86,13 @@ public class FoodTruckDTO {
 
     public void setFoodType(FoodType foodType) {
         this.foodType = foodType;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

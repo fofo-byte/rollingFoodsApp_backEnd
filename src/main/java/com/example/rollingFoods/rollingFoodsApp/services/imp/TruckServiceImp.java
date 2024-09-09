@@ -4,7 +4,6 @@ import com.example.rollingFoods.rollingFoodsApp.mappers.FoodTruckMapper;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
-import com.example.rollingFoods.rollingFoodsApp.models.Picture;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
@@ -12,18 +11,13 @@ import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,11 +45,13 @@ public class TruckServiceImp implements TruckService {
 
 
     // Get all food trucks
+    @Override
     public List<FoodTruckDTO> getTrucks() {
         final List<FoodTruck> trucks = foodTruckRepo.findAll();
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
     // Create food truck
+    @Override
     public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO,final Long foodTruckOwnerId) {
         final FoodTruckOwner foodTruckOwner = foodTruckOwnerRepo.findById(foodTruckOwnerId).orElseThrow(() -> new EntityNotFoundException("Food truck owner not found with id: " + foodTruckOwnerId));
         FoodTruck foodTruck = new FoodTruck();
@@ -64,6 +60,7 @@ public class TruckServiceImp implements TruckService {
         foodTruck.setSpeciality(foodTruckDTO.getSpeciality());
         foodTruck.setFoodType(foodTruckDTO.getFoodType());
         foodTruck.setCoordinates(foodTruckDTO.getCoordinates());
+        foodTruck.setProfileImage(foodTruckDTO.getProfileImage());
         foodTruck.setFoodTruckOwner(foodTruckOwner);
 
         final FoodTruck savedFoodTruck = foodTruckRepo.save(foodTruck);
@@ -81,9 +78,45 @@ public class TruckServiceImp implements TruckService {
     }
 
     // Get food truck by id
+
     private FoodTruck getTruckById(Long id) {
         return foodTruckRepo.findById(id).orElseThrow(()-> new EntityNotFoundException("Truck not found with id: " + id));
     }
+
+
+
+    //update truck
+    @Override
+    public FoodTruckDTO updateTruck(Long id, FoodTruckDTO foodTruckDTO) {
+        final FoodTruck truck = getTruckById(id);
+        truck.setName(foodTruckDTO.getName());
+        truck.setDescription(foodTruckDTO.getDescription());
+        truck.setSpeciality(foodTruckDTO.getSpeciality());
+        truck.setFoodType(foodTruckDTO.getFoodType());
+        truck.setCoordinates(foodTruckDTO.getCoordinates());
+        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+        return mapper.foodTruckToDto(updatedTruck);
+    }
+
+    @Override
+    public Page<FoodTruckDTO> getTrucksPageable(Pageable pageable) {
+        final Page<FoodTruck> trucks = foodTruckRepo.findAll(pageable);
+        return trucks.map(mapper::foodTruckToDto);
+    }
+
+    //delete truck
+   @Override
+    public void deleteTruck(int id) {
+        foodTruckRepo.deleteById((long) id);
+    }
+
+    //get truck by owner id
+    @Override
+    public FoodTruckDTO getTruckByOwnerId(Long ownerId) {
+        final FoodTruck truck = foodTruckRepo.findByFoodTruckOwnerId(ownerId);
+        return mapper.foodTruckToDto(truck);
+    }
+
 
 
 

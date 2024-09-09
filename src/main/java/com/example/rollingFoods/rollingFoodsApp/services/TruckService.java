@@ -11,15 +11,22 @@ import java.util.List;
 
 public interface TruckService {
 
-
-
+    //Get all trucks
     public List<FoodTruckDTO> getTrucks();
+    //Create truck
     public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO,Long id);
-    public FoodTruckDTO findTruckById(Long id);
-    // public FoodTruck saveTruck(FoodTruck truck);
-    // public void deleteTruck(int id);
-    // public FoodTruck updateTruck(int id, FoodTruck truck);
-    // public FoodTruck createTruck(FoodTruck truck);
+    //Delete truck
+    public void deleteTruck(int id);
+
+    //Find truck by id
+    FoodTruckDTO findTruckById(Long id);
+    //Update truck
+    public FoodTruckDTO updateTruck(Long id, FoodTruckDTO foodTruckDTO);
+    //Get all trucks with pagination
+    public Page<FoodTruckDTO> getTrucksPageable(Pageable pageable);
+    //Get truck by owner id
+    public FoodTruckDTO getTruckByOwnerId(Long ownerId);
+
 
 
 }
