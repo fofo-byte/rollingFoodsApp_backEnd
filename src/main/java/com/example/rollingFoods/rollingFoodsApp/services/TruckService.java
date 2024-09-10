@@ -25,7 +25,7 @@ public interface TruckService {
     //Get all trucks with pagination
     public Page<FoodTruckDTO> getTrucksPageable(Pageable pageable);
     //Get truck by owner id
-    public FoodTruckDTO getTruckByOwnerId(Long ownerId);
+    public Long getTruckByOwnerId(Long ownerId);
 
 
 

@@ -89,11 +89,23 @@ public class TruckServiceImp implements TruckService {
     @Override
     public FoodTruckDTO updateTruck(Long id, FoodTruckDTO foodTruckDTO) {
         final FoodTruck truck = getTruckById(id);
-        truck.setName(foodTruckDTO.getName());
-        truck.setDescription(foodTruckDTO.getDescription());
-        truck.setSpeciality(foodTruckDTO.getSpeciality());
-        truck.setFoodType(foodTruckDTO.getFoodType());
-        truck.setCoordinates(foodTruckDTO.getCoordinates());
+
+        if (foodTruckDTO.getName() != null) {
+            truck.setName(foodTruckDTO.getName());
+        }
+        if (foodTruckDTO.getDescription() != null) {
+            truck.setDescription(foodTruckDTO.getDescription());
+        }
+        if (foodTruckDTO.getSpeciality() != null) {
+            truck.setSpeciality(foodTruckDTO.getSpeciality());
+        }
+        if (foodTruckDTO.getFoodType() != null) {
+            truck.setFoodType(foodTruckDTO.getFoodType());
+        }
+        if (foodTruckDTO.getProfileImage() != null) {
+            truck.setProfileImage(foodTruckDTO.getProfileImage());
+        }
+
         final FoodTruck updatedTruck = foodTruckRepo.save(truck);
         return mapper.foodTruckToDto(updatedTruck);
     }
@@ -112,9 +124,8 @@ public class TruckServiceImp implements TruckService {
 
     //get truck by owner id
     @Override
-    public FoodTruckDTO getTruckByOwnerId(Long ownerId) {
-        final FoodTruck truck = foodTruckRepo.findByFoodTruckOwnerId(ownerId);
-        return mapper.foodTruckToDto(truck);
+    public Long getTruckByOwnerId(Long ownerId) {
+        return foodTruckRepo.findByFoodTruckOwnerId(ownerId);
     }
 
 

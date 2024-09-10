@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 public class FoodTruckController {
@@ -51,18 +52,28 @@ public class FoodTruckController {
     }
 
     // Update food truck
-    @PutMapping("/updateFoodTruck/{id}")
-    public ResponseEntity <FoodTruckDTO> updateFoodTruck(@PathVariable Long id, @RequestBody FoodTruckDTO foodTruckDTO) {
-        return ResponseEntity.ok(truckService.updateTruck(id, foodTruckDTO));
+    @PutMapping(value = "/updateFoodTruck" , consumes = "multipart/form-data")
+    public ResponseEntity <FoodTruckDTO> updateFoodTruck(@RequestParam ("ownerId") Long id, @RequestPart("foodTruck") MultipartFile foodTruckFile) throws IOException {
+        FoodTruckDTO foodTruck = objectMapper.readValue(foodTruckFile.getInputStream(), FoodTruckDTO.class);
+        final FoodTruckDTO updatedFoodTruck = truckService.updateTruck(id, foodTruck);
+        return ResponseEntity.ok(updatedFoodTruck);
     }
 
 
 
     // Get food truck by owner id
-    @GetMapping("/foodTruckByOwnerId/{ownerId}")
-    public ResponseEntity <FoodTruckDTO> getFoodTruckByOwnerId(@PathVariable Long ownerId) {
+    @GetMapping("/foodTruckByOwnerId")
+    public ResponseEntity <Long> getFoodTruckByOwnerId(@RequestParam ("ownerId")Long ownerId) {
         return ResponseEntity.ok(truckService.getTruckByOwnerId(ownerId));
     }
+
+    // Delete food truck
+    @DeleteMapping("/deleteFoodTruck")
+    public ResponseEntity<Void> deleteFoodTruck(@RequestParam("foodTruckId") int id) {
+        truckService.deleteTruck(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 
