@@ -10,7 +10,7 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface FoodTruckMapper {
-    @Mapping(target = "id", ignore = true)
+
     FoodTruck dtoToFoodTruck(FoodTruckDTO dto);
     FoodTruckDTO foodTruckToDto(FoodTruck foodTruck);
 }
