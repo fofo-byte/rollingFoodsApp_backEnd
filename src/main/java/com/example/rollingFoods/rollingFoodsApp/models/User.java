@@ -19,23 +19,29 @@ public abstract class User {
     private String lastname;
     @Column(name="phone_number")
     private String phoneNumber;
+    private String email;
 
     @Embedded
     private Address address;
     @Column(name = "create_at")
     private LocalDate createdDate = LocalDate.now();
+    @Column(name = "update_at")
+    private LocalDate updatedDate = LocalDate.now();
 
 
     public User() {
     }
 
-    public User(Long id, String firstname, String lastname, String phoneNumber, Address address, LocalDate createdDate) {
+    public User(Long id, String firstname, String lastname, String phoneNumber,String email, Address address, LocalDate createdDate, LocalDate updatedDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.email = email;
+
     }
 
     public Long getId() {
@@ -85,5 +91,21 @@ public abstract class User {
 
     public LocalDate getCreatedDate() {
         return createdDate;
+    }
+
+    public LocalDate getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDate updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

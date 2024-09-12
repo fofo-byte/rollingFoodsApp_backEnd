@@ -11,6 +11,7 @@ public class UserDTO {
     private String firstname;
     private String lastname;
     private String phoneNumber;
+    private String email;
     private AddressDTO address;
     private LocalDate createdDate;
 
@@ -18,12 +19,13 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String firstname, String lastname, String phoneNumber, AddressDTO address, LocalDate createdDate) {
+    public UserDTO(Long id, String firstname, String lastname, String phoneNumber,String email, AddressDTO address, LocalDate createdDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.email = email;
         this.createdDate = createdDate;
     }
 
@@ -74,5 +76,13 @@ public class UserDTO {
 
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
