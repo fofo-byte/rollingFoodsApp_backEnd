@@ -1,5 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
+import com.example.rollingFoods.rollingFoodsApp.component.JwtTokenProvider;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckOwnerDTO;
 import com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruckOwner;
@@ -17,12 +18,16 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.UUID;
 import java.util.logging.Logger;
 
 @Service
 public class EmailServiceImp implements EmailService {
 
     private static final Logger logger = Logger.getLogger(EmailServiceImp.class.getName());
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -32,6 +37,11 @@ public class EmailServiceImp implements EmailService {
 
     @Value("info@rollingFoods")
     private String fromEmail;
+
+    @Value("admin@rollingFoods")
+    private String adminEmail;
+
+
     @Autowired
     private JavaMailSenderImpl mailSender;
 
@@ -39,6 +49,9 @@ public class EmailServiceImp implements EmailService {
     @Override
     public void sendEmailConfirmation(final FoodTruckOwner foodTruckOwnerDTO, final UserCredential userCredential) {
         logger.info("Sending email confirmation for email {} " + foodTruckOwnerDTO.getEmail());
+
+        String uniqueToken = jwtTokenProvider.generateTokenForValidationAccount(userCredential);
+        String validationUrl = "http://localhost:8686/api/validateAccount?token=" + uniqueToken;
 
         final Context context = new Context();
 
@@ -66,6 +79,35 @@ public class EmailServiceImp implements EmailService {
             helper.setText(htmlContent, true);
             mimeMessage.setFrom(fromEmail);
             javaMailSender.send(mimeMessage);
+
+
+            final Context contextAdmin = new Context();
+
+            contextAdmin.setVariable("email", userCredential.getEmail());
+            contextAdmin.setVariable("firstname", foodTruckOwnerDTO.getFirstname());
+            contextAdmin.setVariable("lastname", foodTruckOwnerDTO.getLastname());
+            contextAdmin.setVariable("phone", foodTruckOwnerDTO.getPhoneNumber());
+            contextAdmin.setVariable("companyName", foodTruckOwnerDTO.getCompanyName());
+            contextAdmin.setVariable("tva", foodTruckOwnerDTO.getTva());
+            contextAdmin.setVariable("street", foodTruckOwnerDTO.getAddress().getStreet());
+            contextAdmin.setVariable("bankNumber", foodTruckOwnerDTO.getAddress().getStreetNumber());
+            contextAdmin.setVariable("city", foodTruckOwnerDTO.getAddress().getCity());
+            contextAdmin.setVariable("zipCode", foodTruckOwnerDTO.getAddress().getPostalCode());
+            contextAdmin.setVariable("country", foodTruckOwnerDTO.getAddress().getCountry());
+            contextAdmin.setVariable("validationUrl", validationUrl);
+
+            MimeMessage mimeMessageAdmin = mailSender.createMimeMessage();
+            MimeMessageHelper helperAdmin = new MimeMessageHelper(mimeMessageAdmin, "utf-8");
+
+            helperAdmin.setTo(adminEmail);
+            helperAdmin.setSubject("New Food Truck Owner");
+            String htmlContentAdmin = templateEngine.process("confirmationEmailAdmin", contextAdmin);
+            helperAdmin.setText(htmlContentAdmin, true);
+            mimeMessageAdmin.setFrom(fromEmail);
+            javaMailSender.send(mimeMessageAdmin);
+
+
+
         } catch (Exception e) {
             logger.info("Error sending email confirmation for email {} " + userCredential.getEmail());
         }
