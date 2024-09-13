@@ -28,6 +28,7 @@ public class JwtTokenProvider {
         claims.put("username", userDetails.getUsername());
         claims.put("email", userDetails.getEmail());
         claims.put("roles", userDetails.getAuthorities());
+        claims.put("enabled", userDetails.isEnabled());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -59,12 +60,14 @@ public class JwtTokenProvider {
         String username = claims.get("username", String.class);
         String email = claims.get("email", String.class);
         List<String> roles = (List<String>) claims.get("roles");
+        boolean enabled = claims.get("enabled", Boolean.class);
 
         Map<String, Object> tokenDetails = new HashMap<>();
         tokenDetails.put("id", id);
         tokenDetails.put("username", username);
         tokenDetails.put("email", email);
         tokenDetails.put("roles", roles);
+        tokenDetails.put("enabled", enabled);
 
         return tokenDetails;
     }

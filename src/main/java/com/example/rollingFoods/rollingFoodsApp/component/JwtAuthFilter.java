@@ -62,6 +62,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         }
                     }
                 }
+                boolean enabled = (boolean) claims.get("enabled");
 
                 //Verifications of claims
                 if (username == null || email == null || roles.isEmpty()) {

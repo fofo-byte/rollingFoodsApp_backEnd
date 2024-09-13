@@ -64,8 +64,9 @@ public class FoodTruckOwnerController {
     // Check if the user is a food truck owner
     @GetMapping("/isFoodTruckOwner")
     public ResponseEntity<Boolean> isFoodTruckOwner(@RequestParam Long userCredentialId) {
-        logger.info("Checking if the user is a food truck owner: {}", userCredentialId);
+        logger.info("Checking if the user is a food truck owner: {}" , userCredentialId);
         Boolean isFoodTruckOwner = foodTruckOwnerService.isFoodTruckOwner(userCredentialId);
+        logger.info("Is the user a food truck owner: {}" , isFoodTruckOwner);
         return ResponseEntity.ok(isFoodTruckOwner);
     }
 }

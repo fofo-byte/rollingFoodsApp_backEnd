@@ -103,7 +103,8 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
 
     @Override
     public Boolean isFoodTruckOwner(Long userCredentialId) {
-        return foodTruckOwnerRepo.existsByUserCredentialId(userCredentialId);
+        boolean isFoodTruckOwner = foodTruckOwnerRepo.existsByUserCredentialId(userCredentialId);
+        return isFoodTruckOwner;
     }
 
 }
