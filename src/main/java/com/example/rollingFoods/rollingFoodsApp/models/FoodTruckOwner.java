@@ -41,8 +41,8 @@ public class FoodTruckOwner extends User {
     public FoodTruckOwner() {
     }
 
-    public FoodTruckOwner(Long id, String firstname, String lastname, String phoneNumber, Address address, LocalDate createdDate, String companyName, String tva, String bankNumber, Set<FoodTruck> foodTrucks, UserCredential userCredential) {
-        super(id, firstname, lastname, phoneNumber, address, createdDate);
+    public FoodTruckOwner(Long id, String firstname, String lastname, String phoneNumber, String email, Address address, LocalDate createdDate, LocalDate updatedDate, String companyName, String tva, String bankNumber, Set<FoodTruck> foodTrucks, UserCredential userCredential) {
+        super(id, firstname, lastname, phoneNumber, email, address, createdDate, updatedDate);
         this.companyName = companyName;
         this.tva = tva;
         this.bankNumber = bankNumber;
@@ -90,4 +90,6 @@ public class FoodTruckOwner extends User {
     public void setUserCredential(UserCredential userCredential) {
         this.userCredential = userCredential;
     }
+
+
 }

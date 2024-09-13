@@ -18,8 +18,8 @@ public class FoodTruckOwnerDTO  extends UserDTO{
     public FoodTruckOwnerDTO() {
     }
 
-    public FoodTruckOwnerDTO(Long id, String firstname, String lastname, String phoneNumber, AddressDTO address, LocalDate createdDate, String companyName, String tva, String bankNumber) {
-        super(id, firstname, lastname, phoneNumber, address, createdDate);
+    public FoodTruckOwnerDTO(Long id, String firstname, String lastname, String phoneNumber,String email, AddressDTO address, LocalDate createdDate, String companyName, String tva, String bankNumber) {
+        super(id, firstname, lastname, phoneNumber, email, address, createdDate);
         this.companyName = companyName;
         this.tva = tva;
         this.bankNumber = bankNumber;

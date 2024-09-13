@@ -9,9 +9,13 @@ import com.example.rollingFoods.rollingFoodsApp.models.UserCredential;
 import com.example.rollingFoods.rollingFoodsApp.repositories.RoleRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.UserService;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +23,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.BrokenBarrierException;
+
+
 
 
 @Service
@@ -86,6 +92,31 @@ public class UserServiceImp implements UserService {
                 throw new RuntimeException("Error: " + e.getMessage());
             }
 
+    }
+
+    @Override
+    public void validateToken(String token){
+        try {
+            // Décodage du token
+            Claims claims = Jwts.parser()
+                    .setSigningKey("357638792F423F4428472B4B6250655368566D597133743677397A2443264629") // Utiliser la même clé secrète pour valider le JWT
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            // Vérification de l'action et récupération de l'ID de l'utilisateur
+            String action = claims.get("action", String.class);
+            Long userId = claims.get("id", Long.class);
+
+            if ("activateAccount".equals(action)) {
+                // Activer l'utilisateur dans la base de données
+                UserCredential user = userCredentialRepo.findById(userId).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                user.setEnabled(true);
+                userCredentialRepo.save(user);
+                System.out.println("Compte activé avec succès !");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Token invalide ou expiré", e);
+        }
     }
 
 

@@ -13,10 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -80,6 +77,13 @@ public class UserController {
         }
 
 
+    }
+
+    @GetMapping("/validateAccount")
+    public ResponseEntity<String> validateToken(@RequestParam String token) {
+        logger.info("Validating token: {}", token);
+        userService.validateToken(token);
+        return ResponseEntity.ok("Account is valid");
     }
 
 }

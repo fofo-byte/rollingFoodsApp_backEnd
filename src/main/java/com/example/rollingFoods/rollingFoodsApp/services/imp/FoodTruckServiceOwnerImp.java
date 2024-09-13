@@ -12,6 +12,7 @@ import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.RoleRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
+import com.example.rollingFoods.rollingFoodsApp.services.EmailService;
 import com.example.rollingFoods.rollingFoodsApp.services.FoodTruckOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +49,9 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
 
     @Autowired
     private RoleRepo roleRepo;
+
+    @Autowired
+    private EmailService emailService;
 
     public FoodTruckServiceOwnerImp(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
@@ -87,12 +91,20 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
         foodTruckOwner.setAddress(address);
         foodTruckOwner.setUserCredential(userCredential);
         FoodTruckOwner foodTruckOwnerSave =  foodTruckOwnerRepo.save(foodTruckOwner);
+        emailService.sendEmailConfirmation(foodTruckOwnerSave, userCredential);  ;
+
         return mapper.foodTruckOwnerToDto(foodTruckOwnerSave);
     }
 
     @Override
     public Long findFoodTruckOwnerIdByUserCredentialId(Long userCredentialId) {
         return foodTruckOwnerRepo.findFoodTruckOwnerIdByUserCredentialId(userCredentialId);
+    }
+
+    @Override
+    public Boolean isFoodTruckOwner(Long userCredentialId) {
+        boolean isFoodTruckOwner = foodTruckOwnerRepo.existsByUserCredentialId(userCredentialId);
+        return isFoodTruckOwner;
     }
 
 }

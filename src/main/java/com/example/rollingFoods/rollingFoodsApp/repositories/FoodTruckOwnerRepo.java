@@ -8,4 +8,6 @@ public interface FoodTruckOwnerRepo extends JpaRepository<FoodTruckOwner, Long> 
 
 @Query("SELECT f.id FROM FoodTruckOwner f WHERE f.userCredential.id = :userCredentialId")
     Long findFoodTruckOwnerIdByUserCredentialId(Long userCredentialId);
+
+    Boolean existsByUserCredentialId(Long userCredentialId);
 }

@@ -18,4 +18,6 @@ public interface FoodTruckOwnerService {
 
     //get FoodTruckOwnerId by userCredentialId
     Long findFoodTruckOwnerIdByUserCredentialId(Long userCredentialId);
+
+    Boolean isFoodTruckOwner(Long userCredentialId);
 }

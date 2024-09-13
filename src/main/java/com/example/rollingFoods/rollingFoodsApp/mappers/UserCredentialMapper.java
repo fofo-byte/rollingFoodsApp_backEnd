@@ -12,14 +12,14 @@ public interface UserCredentialMapper {
     @Mapping(source = "password", target = "password")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "username", target = "username")
-    @Mapping(source = "enabled", target = "enabled")
+    @Mapping(source = "enabled", target = "enabled", defaultValue = "false")
     @Mapping(source = "roles", target = "roles")
     @Mapping(target = "authorities", ignore = true)
     UserCredential userToDto(UserCredential user);
     @Mapping(source = "password", target = "password")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "username", target = "username")
-    @Mapping(source = "enabled", target = "enabled")
+    @Mapping(source = "enabled", target = "enabled", defaultValue = "false")
     @Mapping(source = "roles", target = "roles")
     UserCredential dtoToUser(UserCredentialDTO dto);
 

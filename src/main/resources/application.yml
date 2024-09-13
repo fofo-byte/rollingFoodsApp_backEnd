@@ -36,3 +36,19 @@ spring:
                 jpa:
                     repository:
                     query: DEBUG
+
+  mail:
+    username: "f20161d96baaa6"
+    password: "d3d74bc7044d71"
+    host: "sandbox.smtp.mailtrap.io"
+    port: 2525
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: "*"
+
