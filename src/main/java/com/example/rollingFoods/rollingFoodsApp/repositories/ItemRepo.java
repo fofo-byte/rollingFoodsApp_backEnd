@@ -10,6 +10,8 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
 
     // Find all items by category id
     List<Item> findAllById(Long categorieId);
+
+    List<Item> findByFoodTruckId(Long foodTruckId);
     // Find all items by menu id
     //@Query("SELECT i FROM Item i JOIN i.categorie c JOIN c.menu m WHERE m.id = :menuId")
     //List<Item> findAllByMenuId(Long menuId);

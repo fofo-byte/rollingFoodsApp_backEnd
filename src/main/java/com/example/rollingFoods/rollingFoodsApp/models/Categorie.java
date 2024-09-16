@@ -20,6 +20,8 @@ public class Categorie {
     private String name;
     private String description;
 
+    /*
+
     //Relation ManyToMany avec Menu car une catégorie peut appartenir à plusieurs menus
     @ManyToMany(mappedBy = "categories")
     @JsonManagedReference
@@ -29,6 +31,10 @@ public class Categorie {
     //Relation OneToMany avec Item car une catégorie peut contenir plusieurs items
     @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
     private Set<Item> items = new HashSet<>();
+
+
+     */
+
 
     public Categorie() {
     }
@@ -64,21 +70,7 @@ public class Categorie {
         this.description = description;
     }
 
-    public Set<Item> getItems() {
-        return items;
-    }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
-
-    public Set<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
-    }
 
 
 }

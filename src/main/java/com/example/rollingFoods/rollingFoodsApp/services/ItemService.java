@@ -14,7 +14,12 @@ public interface ItemService {
     public Item addItem(Item item);
     public ItemDTO updateItem(ItemDTO itemDTO);
     public void deleteItem(Long id);
-    public List<ItemDTO> getItemsByCategorieId(Long categorieId);
+    //public List<ItemDTO> getItemsByCategorieId(Long categorieId);
     public Item addItemToCategorie(ItemDTO itemDTO);
+    //public List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId);
 
+    ItemDTO addItemToFoodTruck(ItemDTO itemDTO);
+
+    Item addItemToFoodTruck(ItemDTO itemDTO, Long foodTruckId);
+    List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId);
 }

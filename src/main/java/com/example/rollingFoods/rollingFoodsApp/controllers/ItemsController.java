@@ -27,18 +27,27 @@ public class ItemsController {
     public ResponseEntity <ItemDTO> getItemById(@PathVariable("id") Long itemId) {
         return ResponseEntity.ok(itemService.getItemById(itemId));
     }
+
+    /*
     // Get items by category id
     @GetMapping("/items/categorie/{categorieId}")
     public ResponseEntity <List<ItemDTO>> getItemsByCategorieId(@PathVariable("categorieId") Long categorieId) {
         return ResponseEntity.ok(itemService.getItemsByCategorieId(categorieId));
     }
+
+     */
     //
     @PostMapping("/items")
-    public ResponseEntity <Item> createItem(@RequestBody ItemDTO itemDTO) {
-        Item Item = itemService.addItemToCategorie(itemDTO);
+    public ResponseEntity <Item> createItem(@RequestBody ItemDTO itemDTO, @RequestParam("foodTruckId") Long foodTruckId) {
+        Item Item = itemService.addItemToFoodTruck(itemDTO, foodTruckId);
         return ResponseEntity.ok(Item);
     }
 
+    //Get items by food truck id
+    @GetMapping("/items/foodTruck")
+    public ResponseEntity <List<ItemDTO>> getItemsByFoodTruckId(@RequestParam("foodTruckId") Long foodTruckId) {
+        return ResponseEntity.ok(itemService.getItemsByFoodTruckId(foodTruckId));
+    }
 
 
 
