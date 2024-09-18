@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services;
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
+import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
 import com.example.rollingFoods.rollingFoodsApp.models.Item;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface ItemService {
 
     Item addItemToFoodTruck(ItemDTO itemDTO, Long foodTruckId);
     List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId);
+    List<ItemDTO> getItemsByCategory(String category);
+    public List<ItemDTO> getItemsByFoodTruckIdAndCategory(Long foodTruckId, String category);
 }

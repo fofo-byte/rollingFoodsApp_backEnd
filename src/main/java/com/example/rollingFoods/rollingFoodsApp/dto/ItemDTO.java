@@ -12,21 +12,21 @@ public class ItemDTO
     private String name;
     private Float price;
     private String description;
-    private ItemCategorie itemCategorie;
     private String pictureItem;
+    private ItemCategorie itemCategorie;
 
 
 
     public ItemDTO() {
     }
 
-    public ItemDTO(Long id, String name, Float price, String description, ItemCategorie itemCategorie, String pictureItem) {
+    public ItemDTO(Long id, String name, Float price, String description, String pictureItem, ItemCategorie itemCategorie) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.itemCategorie = itemCategorie;
         this.pictureItem = pictureItem;
+        this.itemCategorie = itemCategorie;
     }
 
     public Long getId() {
@@ -61,19 +61,19 @@ public class ItemDTO
         this.description = description;
     }
 
-    public ItemCategorie getItemCategorie() {
-        return itemCategorie;
-    }
-
-    public void setItemCategorie(ItemCategorie itemCategorie) {
-        this.itemCategorie = itemCategorie;
-    }
-
     public String getPictureItem() {
         return pictureItem;
     }
 
     public void setPictureItem(String pictureItem) {
         this.pictureItem = pictureItem;
+    }
+
+    public ItemCategorie getItemCategorie() {
+        return itemCategorie;
+    }
+
+    public void setItemCategorie(ItemCategorie itemCategorie) {
+        this.itemCategorie = itemCategorie;
     }
 }

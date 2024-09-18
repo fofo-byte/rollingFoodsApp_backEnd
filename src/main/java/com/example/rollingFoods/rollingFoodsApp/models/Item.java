@@ -3,10 +3,8 @@ package com.example.rollingFoods.rollingFoodsApp.models;
 
 import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Enumeration;
 
 @Entity
 @Table(name = "article")

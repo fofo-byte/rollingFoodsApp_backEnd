@@ -2,6 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
+import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
 import com.example.rollingFoods.rollingFoodsApp.models.Item;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,21 @@ public class ItemsController {
     public ResponseEntity <List<ItemDTO>> getItemsByFoodTruckId(@RequestParam("foodTruckId") Long foodTruckId) {
         return ResponseEntity.ok(itemService.getItemsByFoodTruckId(foodTruckId));
     }
+
+    // Get items by category
+    @GetMapping("/items/category")
+    public ResponseEntity <List<ItemDTO>> getItemsByCategory(@RequestParam("category") String category) {
+        return ResponseEntity.ok(itemService.getItemsByCategory(category));
+    }
+
+    // Get items by food truck id and category
+    @GetMapping("/items/foodTruckAndCategory")
+    public ResponseEntity<List<ItemDTO>> getItemsByFoodTruckIdAndCategory(
+            @RequestParam("foodTruckId") Long foodTruckId,
+            @RequestParam("category") String category) {
+        return ResponseEntity.ok(itemService.getItemsByFoodTruckIdAndCategory(foodTruckId, category));
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
+import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
 import com.example.rollingFoods.rollingFoodsApp.mappers.ItemMapper;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.models.Item;
@@ -94,6 +95,22 @@ public class ItemServiceImp implements ItemService {
     @Override
     public List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId) {
         final List <Item> items = itemRepo.findByFoodTruckId(foodTruckId);
+        return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
+    }
+
+    //Get items by category
+    @Override
+    public List<ItemDTO> getItemsByCategory(String category) {
+        ItemCategorie itemCategorieEnum = ItemCategorie.valueOf(category);  // Convertir la chaîne en enum
+        List<Item> items = itemRepo.findByItemCategorie(itemCategorieEnum);
+        return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
+    }
+
+    //Get items by food truck id and category
+    @Override
+    public List<ItemDTO> getItemsByFoodTruckIdAndCategory(Long foodTruckId, String category) {
+        ItemCategorie itemCategorieEnum = ItemCategorie.valueOf(category);  // Convertir la chaîne en enum
+        List<Item> items = itemRepo.findByFoodTruckIdAndItemCategorie(foodTruckId, itemCategorieEnum);
         return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
     }
 
