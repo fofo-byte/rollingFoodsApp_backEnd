@@ -1,27 +1,41 @@
 package com.example.rollingFoods.rollingFoodsApp.dto;
 
+import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
+
 import java.math.BigDecimal;
 
 public class ItemDTO
 
 
 {
+    private Long id;
     private String name;
     private Float price;
     private String description;
-    private String foodType;
-    //private Picture picture;
-    private Long categorieId;
+    private String pictureItem;
+    private ItemCategorie itemCategorie;
+
+
+
 
     public ItemDTO() {
     }
 
-    public ItemDTO(String name, Float price, String description, String foodType,Long categorieId) {
+    public ItemDTO(Long id, String name, Float price, String description, String pictureItem, ItemCategorie itemCategorie) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.foodType = foodType;
-        this.categorieId = categorieId;
+        this.pictureItem = pictureItem;
+        this.itemCategorie = itemCategorie;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -48,19 +62,21 @@ public class ItemDTO
         this.description = description;
     }
 
-    public String getFoodType() {
-        return foodType;
+    public String getPictureItem() {
+        return pictureItem;
     }
 
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
+    public void setPictureItem(String pictureItem) {
+        this.pictureItem = pictureItem;
     }
 
-    public Long getCategorieId() {
-        return categorieId;
+    public ItemCategorie getItemCategorie() {
+        return itemCategorie;
     }
 
-    public void setCategorieId(Long subCategorieId) {
-        this.categorieId = subCategorieId;
+    public void setItemCategorie(ItemCategorie itemCategorie) {
+        this.itemCategorie = itemCategorie;
     }
+
+
 }
