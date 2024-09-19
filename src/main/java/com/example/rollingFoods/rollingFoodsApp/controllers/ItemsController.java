@@ -64,6 +64,21 @@ public class ItemsController {
         return ResponseEntity.ok(itemService.getItemsByFoodTruckIdAndCategory(foodTruckId, category));
     }
 
+    // Update item
+    @PutMapping("/items/{id}")
+    public ResponseEntity <ItemDTO> updateItem(@PathVariable("id") Long itemId, @RequestBody ItemDTO itemDTO) {
+        return ResponseEntity.ok(itemService.updateItem(itemId,itemDTO));
+    }
+
+    // Delete item
+    @DeleteMapping("/items/{id}")
+    public ResponseEntity <Void> deleteItem(@PathVariable("id") Long itemId) {
+        itemService.deleteItem(itemId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
 
 
 

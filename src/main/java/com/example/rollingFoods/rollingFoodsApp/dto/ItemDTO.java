@@ -17,6 +17,7 @@ public class ItemDTO
 
 
 
+
     public ItemDTO() {
     }
 
@@ -76,4 +77,6 @@ public class ItemDTO
     public void setItemCategorie(ItemCategorie itemCategorie) {
         this.itemCategorie = itemCategorie;
     }
+
+
 }

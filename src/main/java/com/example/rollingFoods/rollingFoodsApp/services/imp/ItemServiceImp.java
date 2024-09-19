@@ -41,8 +41,15 @@ public class ItemServiceImp implements ItemService {
         return itemRepo.save(item);
     }
 
-    public ItemDTO updateItem(ItemDTO itemDTO) {
-        final Item item = mapper.dtoToItem(itemDTO);
+
+    @Override
+    public ItemDTO updateItem(Long id, ItemDTO itemDTO) {
+        final Item item = itemRepo.findById(id).orElseThrow(()->new RuntimeException("Item not found"));
+        item.setName(itemDTO.getName());
+        item.setDescription(itemDTO.getDescription());
+        item.setPrice(itemDTO.getPrice());
+        item.setItemCategorie(itemDTO.getItemCategorie());
+        item.setPictureItem(itemDTO.getPictureItem());
         final Item updated = itemRepo.save(item);
         return mapper.itemToDto(updated);
     }
