@@ -81,5 +81,26 @@ public class FoodTruckController {
         return ResponseEntity.ok(ratedFoodTruck);
     }
 
+    // Open food truck
+    @PutMapping("/openFoodTruck")
+    public ResponseEntity<FoodTruckDTO> openFoodTruck(@RequestParam("foodTruckId") Long truckId , @RequestBody FoodTruckDTO foodTruckDTO) {
+        final FoodTruckDTO openedFoodTruck = truckService.openTruck(truckId, foodTruckDTO);
+        return ResponseEntity.ok(openedFoodTruck);
+    }
+
+    // Close food truck
+    @PutMapping("/closeFoodTruck")
+    public ResponseEntity<FoodTruckDTO> closeFoodTruck(@RequestParam("foodTruckId") Long truckId) {
+        final FoodTruckDTO closedFoodTruck = truckService.closeTruck(truckId);
+        return ResponseEntity.ok(closedFoodTruck);
+    }
+
+    // Find if food truck is open
+    @GetMapping("/isFoodTruckOpen")
+    public ResponseEntity<Boolean> isFoodTruckOpen(@RequestParam("foodTruckId") Long id) {
+        return ResponseEntity.ok(truckService.findStatusById(id));
+    }
+
+
 
 }

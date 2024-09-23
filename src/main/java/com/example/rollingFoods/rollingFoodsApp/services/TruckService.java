@@ -28,6 +28,13 @@ public interface TruckService {
     public Long getTruckByOwnerId(Long ownerId);
     //Truck rating
     public FoodTruckDTO rateTruck(Long truckId, int rating);
+    //Open truck
+    public FoodTruckDTO openTruck(Long truckId, FoodTruckDTO foodTruckDTO);
+    //Close truck
+    public FoodTruckDTO closeTruck(Long truckId);
+    //find truck is open or not
+    public boolean findStatusById(Long id);
+
 
 
 

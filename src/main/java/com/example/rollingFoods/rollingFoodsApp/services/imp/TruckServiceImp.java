@@ -147,6 +147,37 @@ public class TruckServiceImp implements TruckService {
         return mapper.foodTruckToDto(updatedTruck);
     }
 
+    //Open truck
+    @Override
+    public FoodTruckDTO openTruck(Long truckId, FoodTruckDTO foodTruckDTO) {
+        final FoodTruck truck = getTruckById(truckId);
+
+        if (foodTruckDTO.getCoordinates() != null) {
+            truck.setCoordinates(foodTruckDTO.getCoordinates());
+            truck.setOpen(true);
+        }
+        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+        return mapper.foodTruckToDto(updatedTruck);
+
+    }
+
+    //Close truck
+    @Override
+    public FoodTruckDTO closeTruck(Long truckId) {
+        final FoodTruck truck = getTruckById(truckId);
+        truck.setOpen(false);
+        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+        return mapper.foodTruckToDto(updatedTruck);
+    }
+
+    //find truck is open or not
+    @Override
+    public boolean findStatusById(Long id) {
+        boolean status = foodTruckRepo.findStatusById(id);
+        return status;
+
+    }
+
 
 
 

@@ -18,6 +18,7 @@ public class FoodTruckDTO {
     private String profileImage;
     private int rating;
     private int ratingCount;
+    private boolean isOpen;
     private Set<MenuDTO> menus;
     private List<PictureDTO> pictures;
 
@@ -113,6 +114,14 @@ public class FoodTruckDTO {
 
     public void setRatingCount(int ratingCount) {
         this.ratingCount = ratingCount;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
 }
