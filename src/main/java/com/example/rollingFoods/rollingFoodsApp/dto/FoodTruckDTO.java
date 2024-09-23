@@ -2,6 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.dto;
 
 import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,8 @@ public class FoodTruckDTO {
     private Coordinates coordinates;
     private FoodType foodType;
     private String profileImage;
+    private int rating;
+    private int ratingCount;
     private Set<MenuDTO> menus;
     private List<PictureDTO> pictures;
 
@@ -95,4 +98,22 @@ public class FoodTruckDTO {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
+    }
+
 }
+

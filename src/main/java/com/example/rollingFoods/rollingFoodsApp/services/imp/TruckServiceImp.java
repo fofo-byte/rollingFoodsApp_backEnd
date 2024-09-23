@@ -128,6 +128,25 @@ public class TruckServiceImp implements TruckService {
         return foodTruckRepo.findByFoodTruckOwnerId(ownerId);
     }
 
+    //rate truck
+    @Override
+    public FoodTruckDTO rateTruck(Long truckId, int rating) {
+        final FoodTruck truck = getTruckById(truckId);
+
+        // get the current rating and rating count
+        final int currentRating = truck.getRating();
+        final int currentRatingCount = truck.getRatingCount();
+
+        // calculate the new rating and rating count
+        final int newRatingCount = currentRatingCount + 1;
+        // calculate the new rating
+        final double newRating = (currentRating * currentRatingCount + rating) / (double) newRatingCount;
+        truck.setRatingCount(newRatingCount);
+        truck.setRating((int)Math.round(newRating));
+        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+        return mapper.foodTruckToDto(updatedTruck);
+    }
+
 
 
 

@@ -42,7 +42,7 @@ public class FoodTruckOwner extends User {
     }
 
     public FoodTruckOwner(Long id, String firstname, String lastname, String phoneNumber, String email, Address address, LocalDate createdDate, LocalDate updatedDate, String companyName, String tva, String bankNumber, Set<FoodTruck> foodTrucks, UserCredential userCredential) {
-        super(id, firstname, lastname, phoneNumber, email, address, createdDate, updatedDate);
+        super(id, firstname, lastname, phoneNumber, address, createdDate, updatedDate);
         this.companyName = companyName;
         this.tva = tva;
         this.bankNumber = bankNumber;
