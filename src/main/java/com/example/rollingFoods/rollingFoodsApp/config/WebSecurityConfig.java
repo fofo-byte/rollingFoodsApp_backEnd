@@ -60,6 +60,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/items/{id}").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/items/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/items/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/rateFoodTruck").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/*/subscription/confirm").permitAll()
                         .requestMatchers(HttpMethod.POST, "/resend-verification-email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()

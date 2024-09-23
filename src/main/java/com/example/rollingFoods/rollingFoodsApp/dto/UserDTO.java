@@ -12,6 +12,7 @@ public class UserDTO {
     private String lastname;
     private String phoneNumber;
     private String email;
+    private String urlProfilePicture;
     private AddressDTO address;
     private LocalDate createdDate;
 
@@ -84,5 +85,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrlProfilePicture() {
+        return urlProfilePicture;
+    }
+
+    public void setUrlProfilePicture(String urlProfilePicture) {
+        this.urlProfilePicture = urlProfilePicture;
     }
 }

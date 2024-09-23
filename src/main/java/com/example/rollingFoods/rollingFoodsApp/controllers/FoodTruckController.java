@@ -74,9 +74,12 @@ public class FoodTruckController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-
+    // Rate food truck
+    @PutMapping("/rateFoodTruck")
+    public ResponseEntity<FoodTruckDTO> rateFoodTruck(@RequestParam("foodTruckId") Long truckId, @RequestParam("rating") int rating) {
+        final FoodTruckDTO ratedFoodTruck = truckService.rateTruck(truckId, rating);
+        return ResponseEntity.ok(ratedFoodTruck);
+    }
 
 
 }

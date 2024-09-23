@@ -48,7 +48,7 @@ public class EmailServiceImp implements EmailService {
 
     @Override
     public void sendEmailConfirmation(final FoodTruckOwner foodTruckOwnerDTO, final UserCredential userCredential) {
-        logger.info("Sending email confirmation for email {} " + foodTruckOwnerDTO.getEmail());
+        logger.info("Sending email confirmation for email {} " + userCredential.getEmail());
 
         String uniqueToken = jwtTokenProvider.generateTokenForValidationAccount(userCredential);
         String validationUrl = "http://localhost:8686/api/validateAccount?token=" + uniqueToken;

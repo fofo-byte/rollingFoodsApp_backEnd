@@ -30,6 +30,10 @@ public class FoodTruck {
     private Float length;
     private Float width;
     private Boolean isOpen = false;
+    @Column(name = "rating")
+    private int rating = 0;
+    @Column(name = "rating_count")
+    private int ratingCount = 0;
     @Column(name = "created_date")
     private LocalDate createdDate = LocalDate.now();
 
@@ -183,4 +187,21 @@ public class FoodTruck {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
+    }
+
 }

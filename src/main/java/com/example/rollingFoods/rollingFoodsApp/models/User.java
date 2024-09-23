@@ -19,7 +19,8 @@ public abstract class User {
     private String lastname;
     @Column(name="phone_number")
     private String phoneNumber;
-    private String email;
+    private String urlProfilePicture;
+
 
     @Embedded
     private Address address;
@@ -32,7 +33,7 @@ public abstract class User {
     public User() {
     }
 
-    public User(Long id, String firstname, String lastname, String phoneNumber,String email, Address address, LocalDate createdDate, LocalDate updatedDate) {
+    public User(Long id, String firstname, String lastname, String phoneNumber, Address address, LocalDate createdDate, LocalDate updatedDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -40,8 +41,6 @@ public abstract class User {
         this.address = address;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
-        this.email = email;
-
     }
 
     public Long getId() {
@@ -101,11 +100,13 @@ public abstract class User {
         this.updatedDate = updatedDate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUrlProfilePicture() {
+        return urlProfilePicture;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUrlProfilePicture(String urlProfilePicture) {
+        this.urlProfilePicture = urlProfilePicture;
     }
+
+
 }
