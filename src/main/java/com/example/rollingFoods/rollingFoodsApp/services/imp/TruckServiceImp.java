@@ -14,8 +14,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +32,10 @@ import java.util.stream.Collectors;
 @Service
 public class TruckServiceImp implements TruckService {
 
-    @Value("D://Projet rollingFoodsApp//pictures")
+    @Value("D://Projet rollingFoodsApp//pictures//ImagesFoodTruck//")
     private String picturesLocation;
 
-    @Value("http://10.0.2.2:8686/api")
+    @Value("http://192.168.0.115:8686/api")
     private String staticResourcesUrl;
 
     @Autowired
@@ -177,6 +186,20 @@ public class TruckServiceImp implements TruckService {
         return status;
 
     }
+
+    //Upload truck profile image
+    @Override
+    public void uploadProfileImage(MultipartFile file, Long truckId) throws IOException {
+        final FoodTruck truck = getTruckById(truckId);
+        final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Path path = Paths.get(picturesLocation + truckId + fileName);
+        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        truck.setProfileImage(staticResourcesUrl + "/imagesFoodTruck/" + "idFoodTruk/" + truckId + "/" + fileName);
+
+        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+    }
+
+
 
 
 

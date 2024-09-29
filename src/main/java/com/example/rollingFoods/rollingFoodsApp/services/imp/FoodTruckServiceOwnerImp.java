@@ -59,7 +59,7 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
 
     // Registering the FoodTruckOwner
     @Override
-    public UserCredential registerFoodTruckUser(UserCredentialDTO userCredentialDTO) {
+    public UserCredentialDTO registerFoodTruckUser(UserCredentialDTO userCredentialDTO) {
         if(userCredentialDTO.getPassword() ==  null || userCredentialDTO.getPassword().isEmpty()){
             throw new RuntimeException("Password is required");
         }else{

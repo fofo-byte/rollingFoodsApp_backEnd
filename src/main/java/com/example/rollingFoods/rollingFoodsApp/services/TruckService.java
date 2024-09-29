@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TruckService {
@@ -34,6 +35,10 @@ public interface TruckService {
     public FoodTruckDTO closeTruck(Long truckId);
     //find truck is open or not
     public boolean findStatusById(Long id);
+    //Uplaod truck profile image
+    public void uploadProfileImage(MultipartFile file, Long truckId) throws IOException;
+
+
 
 
 
