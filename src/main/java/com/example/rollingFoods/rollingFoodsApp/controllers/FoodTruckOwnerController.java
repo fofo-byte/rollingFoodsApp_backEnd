@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:8686")
 @RestController
 public class FoodTruckOwnerController {
 
@@ -38,9 +38,9 @@ public class FoodTruckOwnerController {
 
     // Registering the FoodTruckOwner
     @PostMapping("/registerFoodTruckOwner")
-     ResponseEntity<UserCredential> registerFoodTruckOwner(@RequestBody @Validated UserCredentialDTO UserCredentialDTO) {
+     ResponseEntity<UserCredentialDTO> registerFoodTruckOwner(@RequestBody @Validated UserCredentialDTO UserCredentialDTO) {
         logger.info("Registering FoodTruckOwner: {}", UserCredentialDTO);
-        UserCredential registerFoodTruckOwner = foodTruckOwnerService.registerFoodTruckUser(UserCredentialDTO);
+        com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO registerFoodTruckOwner = foodTruckOwnerService.registerFoodTruckUser(UserCredentialDTO);
         return ResponseEntity.ok(registerFoodTruckOwner);
     }
 

@@ -1,19 +1,25 @@
 package com.example.rollingFoods.rollingFoodsApp.controllers;
 
+import ch.qos.logback.core.util.StringUtil;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
-
+@CrossOrigin(origins = "http://localhost:8686")
 @RestController
 public class FoodTruckController {
 
@@ -99,6 +105,19 @@ public class FoodTruckController {
     @GetMapping("/isFoodTruckOpen")
     public ResponseEntity<Boolean> isFoodTruckOpen(@RequestParam("foodTruckId") Long id) {
         return ResponseEntity.ok(truckService.findStatusById(id));
+    }
+
+    //upload image
+    @PostMapping("/uploadImage")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("foodTruckId") Long foodTruckId) {
+
+        try {
+            truckService.uploadProfileImage(file, foodTruckId);
+
+            return ResponseEntity.ok("Image uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("Image upload failed");
+        }
     }
 
 

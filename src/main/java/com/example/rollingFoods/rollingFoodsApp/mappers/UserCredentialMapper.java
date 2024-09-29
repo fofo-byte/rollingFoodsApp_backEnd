@@ -14,8 +14,8 @@ public interface UserCredentialMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "enabled", target = "enabled", defaultValue = "false")
     @Mapping(source = "roles", target = "roles")
-    @Mapping(target = "authorities", ignore = true)
-    UserCredential userToDto(UserCredential user);
+
+    UserCredentialDTO userToDto(UserCredential user);
     @Mapping(source = "password", target = "password")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "username", target = "username")

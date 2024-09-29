@@ -11,20 +11,23 @@ public class UserCredentialDTO {
     private String email;
     private String password;
     private Boolean enabled;
+    private String urlProfilePicture;
     private Set<Role> roles;
+    private String authProvider;
 
 
 
     public UserCredentialDTO() {
     }
 
-    public UserCredentialDTO(String username, String email, String password, Boolean enabled, Set<Role> roles) {
+    public UserCredentialDTO(String username, String email, String password, Boolean enabled, Set<Role> roles, String urlProfilePicture, String authProvider) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
-
+        this.urlProfilePicture = urlProfilePicture;
+        this.authProvider = authProvider;
     }
 
     public String getUsername() {
@@ -73,5 +76,21 @@ public class UserCredentialDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUrlProfilePicture() {
+        return urlProfilePicture;
+    }
+
+    public void setUrlProfilePicture(String urlProfilePicture) {
+        this.urlProfilePicture = urlProfilePicture;
+    }
+
+    public String getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(String authProvider) {
+        this.authProvider = authProvider;
     }
 }

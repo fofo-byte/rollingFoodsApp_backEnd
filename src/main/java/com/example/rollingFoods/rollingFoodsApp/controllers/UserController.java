@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin(origins = "http://localhost:8686")
 @RestController
 public class UserController {
 
@@ -28,9 +30,9 @@ public class UserController {
 
 
     @PostMapping("/register")
-    ResponseEntity<UserCredential> registerUser(@RequestBody @Validated UserCredentialDTO userCredentialDTO) {
+    ResponseEntity<UserCredentialDTO> registerUser(@RequestBody @Validated UserCredentialDTO userCredentialDTO) {
         logger.info("Registering User: {}", userCredentialDTO);
-        UserCredential registerUser = userService.registerUser(userCredentialDTO);
+        UserCredentialDTO registerUser = userService.registerUser(userCredentialDTO);
         return ResponseEntity.ok(registerUser);
     }
 

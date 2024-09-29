@@ -21,6 +21,10 @@ public class UserCredential implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(name = "url_profile_picture")
+    private String urlProfilePicture;
+    @Column(name = "auth_provider")
+    private String authProvider;
     private Boolean enabled = false;
 
 
@@ -52,14 +56,15 @@ public class UserCredential implements UserDetails {
     public UserCredential() {
     }
 
-    public UserCredential(Long id, String username, String email, String password, Boolean enabled, Set<Role> roles) {
+    public UserCredential(Long id, String username, String email, String password, Boolean enabled, Set<Role> roles, String urlProfilePicture, String authProvider) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
-
+        this.urlProfilePicture = urlProfilePicture;
+        this.authProvider = authProvider;
     }
 
     @Override
@@ -154,9 +159,21 @@ public class UserCredential implements UserDetails {
         this.foodTruckOwners = foodTruckOwners;
     }
 
+    public String getUrlProfilePicture() {
+        return urlProfilePicture;
+    }
 
+    public void setUrlProfilePicture(String urlProfilePicture) {
+        this.urlProfilePicture = urlProfilePicture;
+    }
 
+    public String getAuthProvider() {
+        return authProvider;
+    }
 
+    public void setAuthProvider(String authProvider) {
+        this.authProvider = authProvider;
+    }
 
 
 }

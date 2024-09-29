@@ -11,8 +11,6 @@ import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +55,7 @@ public class UserServiceImp implements UserService {
 
     //Register user method
     @Override
-    public UserCredential registerUser(UserCredentialDTO userCredentialDTO) {
+    public UserCredentialDTO registerUser(UserCredentialDTO userCredentialDTO) {
         if(userCredentialDTO.getPassword() ==  null || userCredentialDTO.getPassword().isEmpty()){
             throw new RuntimeException("Password is required");
         }else{
@@ -79,9 +77,16 @@ public class UserServiceImp implements UserService {
                 UserCredential user = userCredentialRepo.findByEmail(userCredentialDTO.getEmail());
                 if (user == null) {
                     throw new UsernameNotFoundException("User not found");
-                } else if (!passwordEncoder.matches(userCredentialDTO.getPassword(), user.getPassword())) {
-                    throw new BadCredentialsException("Invalid password");
                 }
+
+                if("GOOGLE".equals(user.getAuthProvider())){
+                    logger.info("User {} has signed in with Google", user.getUsername());
+                }else{
+                    if (!passwordEncoder.matches(userCredentialDTO.getPassword(), user.getPassword())) {
+                        throw new BadCredentialsException("Invalid password");
+                    }
+                }
+
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
                 logger.info("User {} has signed in", user.getUsername());
                 String token =  jwtTokenProvider.generateToken(authentication);
