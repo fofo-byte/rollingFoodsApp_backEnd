@@ -194,7 +194,7 @@ public class TruckServiceImp implements TruckService {
         final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Path path = Paths.get(picturesLocation + truckId + fileName);
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        truck.setProfileImage(staticResourcesUrl + "/imagesFoodTruck/" + "idFoodTruk/" + truckId + "/" + fileName);
+        truck.setProfileImage( "idFoodTruk/" + truckId + "/" + fileName);
 
         final FoodTruck updatedTruck = foodTruckRepo.save(truck);
     }
