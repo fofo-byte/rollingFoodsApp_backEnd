@@ -5,14 +5,21 @@ import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.opencensus.resource.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,11 +37,9 @@ public class FoodTruckController {
     private TruckService truckService;
 
 
-
-
     // Get all food trucks
     @GetMapping("/foodTruck")
-    public ResponseEntity <List<FoodTruckDTO>> getFoodTruck() {
+    public ResponseEntity<List<FoodTruckDTO>> getFoodTruck() {
         return ResponseEntity.ok(truckService.getTrucks());
     }
 
@@ -45,31 +50,30 @@ public class FoodTruckController {
     }
 
 
-
-     //Create food truck
+    //Create food truck
     @PostMapping(value = "/addFoodTruck", consumes = "multipart/form-data")
-    public ResponseEntity <FoodTruckDTO> createFoodTruck(
+    public ResponseEntity<FoodTruckDTO> createFoodTruck(
             @RequestParam("ownerId") Long ownerId,
-            @RequestPart("foodTruck") MultipartFile foodTruckFile
-            )throws IOException {
+            @RequestPart("foodTruck") MultipartFile foodTruckFile,
+            @RequestPart("file") MultipartFile imageFile
+    ) throws IOException {
         FoodTruckDTO foodTruck = objectMapper.readValue(foodTruckFile.getInputStream(), FoodTruckDTO.class);
-        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck,ownerId);
+        final FoodTruckDTO createdFoodTruck = truckService.createTruck(foodTruck, ownerId, imageFile);
         return ResponseEntity.created(URI.create("/foodTruck/" + createdFoodTruck.getId())).build();
     }
 
     // Update food truck
-    @PutMapping(value = "/updateFoodTruck" , consumes = "multipart/form-data")
-    public ResponseEntity <FoodTruckDTO> updateFoodTruck(@RequestParam ("ownerId") Long id, @RequestPart("foodTruck") MultipartFile foodTruckFile) throws IOException {
+    @PutMapping(value = "/updateFoodTruck", consumes = "multipart/form-data")
+    public ResponseEntity<FoodTruckDTO> updateFoodTruck(@RequestParam("ownerId") Long id, @RequestPart("foodTruck") MultipartFile foodTruckFile) throws IOException {
         FoodTruckDTO foodTruck = objectMapper.readValue(foodTruckFile.getInputStream(), FoodTruckDTO.class);
         final FoodTruckDTO updatedFoodTruck = truckService.updateTruck(id, foodTruck);
         return ResponseEntity.ok(updatedFoodTruck);
     }
 
 
-
     // Get food truck by owner id
     @GetMapping("/foodTruckByOwnerId")
-    public ResponseEntity <Long> getFoodTruckByOwnerId(@RequestParam ("ownerId")Long ownerId) {
+    public ResponseEntity<Long> getFoodTruckByOwnerId(@RequestParam("ownerId") Long ownerId) {
         return ResponseEntity.ok(truckService.getTruckByOwnerId(ownerId));
     }
 
@@ -89,7 +93,7 @@ public class FoodTruckController {
 
     // Open food truck
     @PutMapping("/openFoodTruck")
-    public ResponseEntity<FoodTruckDTO> openFoodTruck(@RequestParam("foodTruckId") Long truckId , @RequestBody FoodTruckDTO foodTruckDTO) {
+    public ResponseEntity<FoodTruckDTO> openFoodTruck(@RequestParam("foodTruckId") Long truckId, @RequestBody FoodTruckDTO foodTruckDTO) {
         final FoodTruckDTO openedFoodTruck = truckService.openTruck(truckId, foodTruckDTO);
         return ResponseEntity.ok(openedFoodTruck);
     }
@@ -117,6 +121,34 @@ public class FoodTruckController {
             return ResponseEntity.ok("Image uploaded successfully");
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("Image upload failed");
+        }
+    }
+
+    @GetMapping("/images/{folder}/{filename}")
+    public ResponseEntity<byte[]> serveFile(@PathVariable String folder, @PathVariable String filename) {
+        try {
+            // Construire le chemin du fichier
+            Path file = Paths.get("D:/Projet rollingFoodsApp/pictures/foodTruck/" + folder).resolve(filename);
+
+            // Vérifier que le fichier existe et est lisible
+            if (Files.exists(file) && Files.isReadable(file)) {
+                // Lire le fichier en tant que tableau d'octets
+                byte[] fileData = Files.readAllBytes(file);
+
+                // Déterminer le type MIME du fichier
+                String mimeType = Files.probeContentType(file);
+
+                // Renvoyer la réponse avec le fichier en tant que tableau d'octets
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + filename + "\"")
+                        .contentType(MediaType.parseMediaType(mimeType))
+                        .body(fileData);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (IOException e) {
+            // Gérer les erreurs d'entrée/sortie
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

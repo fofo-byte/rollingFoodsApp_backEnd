@@ -8,6 +8,7 @@ import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckOwnerRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.UserCredentialRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
+import io.jsonwebtoken.io.IOException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +19,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
-
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,10 +30,10 @@ import java.util.stream.Collectors;
 @Service
 public class TruckServiceImp implements TruckService {
 
-    @Value("D://Projet rollingFoodsApp//pictures//ImagesFoodTruck//")
+    @Value("D://Projet rollingFoodsApp/pictures/foodTruck")
     private String picturesLocation;
 
-    @Value("http://192.168.0.115:8686/api")
+    @Value("http://10.0.2.2:8686/api/images")
     private String staticResourcesUrl;
 
     @Autowired
@@ -59,9 +57,12 @@ public class TruckServiceImp implements TruckService {
         final List<FoodTruck> trucks = foodTruckRepo.findAll();
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
+
+
+
     // Create food truck
     @Override
-    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO,final Long foodTruckOwnerId) {
+    public FoodTruckDTO createTruck(final FoodTruckDTO foodTruckDTO, final Long foodTruckOwnerId, final MultipartFile file) throws IOException, java.io.IOException {
         final FoodTruckOwner foodTruckOwner = foodTruckOwnerRepo.findById(foodTruckOwnerId).orElseThrow(() -> new EntityNotFoundException("Food truck owner not found with id: " + foodTruckOwnerId));
         FoodTruck foodTruck = new FoodTruck();
         foodTruck.setName(foodTruckDTO.getName());
@@ -69,10 +70,20 @@ public class TruckServiceImp implements TruckService {
         foodTruck.setSpeciality(foodTruckDTO.getSpeciality());
         foodTruck.setFoodType(foodTruckDTO.getFoodType());
         foodTruck.setCoordinates(foodTruckDTO.getCoordinates());
-        foodTruck.setProfileImage(foodTruckDTO.getProfileImage());
         foodTruck.setFoodTruckOwner(foodTruckOwner);
 
         final FoodTruck savedFoodTruck = foodTruckRepo.save(foodTruck);
+
+        if(file != null && !file.isEmpty()) {
+            String imageUrl = uploadProfileImage(file, savedFoodTruck.getId());
+
+            savedFoodTruck.setProfileImage(imageUrl);
+
+            foodTruckRepo.save(savedFoodTruck);
+
+
+
+        }
 
         return mapper.foodTruckToDto(savedFoodTruck);
     }
@@ -189,21 +200,41 @@ public class TruckServiceImp implements TruckService {
 
     //Upload truck profile image
     @Override
-    public void uploadProfileImage(MultipartFile file, Long truckId) throws IOException {
-        final FoodTruck truck = getTruckById(truckId);
-        final String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Path path = Paths.get(picturesLocation + truckId + fileName);
-        Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        truck.setProfileImage( "idFoodTruk/" + truckId + "/" + fileName);
+    public String uploadProfileImage(MultipartFile file, Long truckId) throws IOException, java.io.IOException {
 
-        final FoodTruck updatedTruck = foodTruckRepo.save(truck);
+        FoodTruck truck = foodTruckRepo.findById(truckId).orElseThrow(() -> new EntityNotFoundException("Truck not found with id: " + truckId));
+
+        final Path locationPath = Paths.get(picturesLocation, String.valueOf(truck.getId()));
+
+        if(!Files.exists(locationPath)) {
+            Files.createDirectory(locationPath);
+        }
+
+        try {
+            final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
+            truck.setProfileImage(staticResourcesUrl + "/" + truck.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            foodTruckRepo.save(truck);
+            return truck.getProfileImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Image upload failed");
+
+        }
+
     }
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
