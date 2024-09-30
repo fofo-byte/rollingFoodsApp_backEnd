@@ -14,10 +14,12 @@ public interface TruckService {
 
     //Get all trucks
     public List<FoodTruckDTO> getTrucks();
-    //Create truck
-    public FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO,Long id);
+
     //Delete truck
     public void deleteTruck(int id);
+
+    // Create food truck
+    FoodTruckDTO createTruck(FoodTruckDTO foodTruckDTO, Long foodTruckOwnerId, MultipartFile file) throws IOException, java.io.IOException;
 
     //Find truck by id
     FoodTruckDTO findTruckById(Long id);
@@ -36,7 +38,7 @@ public interface TruckService {
     //find truck is open or not
     public boolean findStatusById(Long id);
     //Uplaod truck profile image
-    public void uploadProfileImage(MultipartFile file, Long truckId) throws IOException;
+    public String uploadProfileImage(MultipartFile file, Long truckId) throws IOException;
 
 
 
