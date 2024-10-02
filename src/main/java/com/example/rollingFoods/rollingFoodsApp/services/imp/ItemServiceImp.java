@@ -10,15 +10,28 @@ import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.ItemRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
 @Service
 public class ItemServiceImp implements ItemService {
+
+    @Value("D://Projet rollingFoodsApp/pictures/foods")
+    private String foodItemsPicturesLocation;
+
+    @Value("http://10.0.2.2:8686/api/images/foods/")
+    private String foodItemsStacticRessourcesUrl;
 
     @Autowired
     private ItemRepo itemRepo;
@@ -78,25 +91,44 @@ public class ItemServiceImp implements ItemService {
 
 
 
-    @Override
-    public ItemDTO addItemToFoodTruck(ItemDTO itemDTO) {
-        return null;
-    }
+
 
 
     //Add new item to food truck
     @Override
-    public Item addItemToFoodTruck(ItemDTO itemDTO, Long foodTruckId) {
+    public ItemDTO addItemToFoodTruck(final ItemDTO itemDTO, Long foodTruckId, MultipartFile file) throws IOException {
         final FoodTruck foodTruck = foodTruckRepo.findById(foodTruckId).orElseThrow(()->new RuntimeException("Food truck not found"));
         final Item item = new Item();
         item.setName(itemDTO.getName());
-        item.setDescription(itemDTO.getDescription());
+        item.setDescription(itemDTO.getName());
         item.setPrice(itemDTO.getPrice());
         item.setItemCategorie(itemDTO.getItemCategorie());
-        item.setPictureItem(itemDTO.getPictureItem());
         item.setFoodTruck(foodTruck);
 
-        return itemRepo.save(item);
+        final Item savedItem = itemRepo.save(item);
+
+
+
+        if(file != null && !file.isEmpty()) {
+            final Path locationPath = Paths.get(foodItemsPicturesLocation, String.valueOf(foodTruckId));
+
+            if(!Files.exists(locationPath)) {
+                Files.createDirectory(locationPath);
+        }
+
+
+        try {
+            final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
+            savedItem.setPictureItem(foodItemsStacticRessourcesUrl + foodTruckId + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            itemRepo.save(savedItem);
+            return mapper.itemToDto(savedItem);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Image upload failed");
+        }
+    }
+        return mapper.itemToDto(savedItem);
     }
     //Get items by food truck id
     @Override

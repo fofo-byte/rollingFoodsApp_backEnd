@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
 public class TruckServiceImp implements TruckService {
 
     @Value("D://Projet rollingFoodsApp/pictures/foodTruck")
-    private String picturesLocation;
+    private String foodTruckPicturesLocation;
 
-    @Value("http://10.0.2.2:8686/api/images")
-    private String staticResourcesUrl;
+    @Value("http://10.0.2.2:8686/api/images/foodTruck/")
+    private String foodTrucksStaticRessiurcesUrl;
 
     @Autowired
     private UserCredentialRepo userCredentialRepo;
@@ -204,7 +204,7 @@ public class TruckServiceImp implements TruckService {
 
         FoodTruck truck = foodTruckRepo.findById(truckId).orElseThrow(() -> new EntityNotFoundException("Truck not found with id: " + truckId));
 
-        final Path locationPath = Paths.get(picturesLocation, String.valueOf(truck.getId()));
+        final Path locationPath = Paths.get(foodTruckPicturesLocation, String.valueOf(truck.getId()));
 
         if(!Files.exists(locationPath)) {
             Files.createDirectory(locationPath);
@@ -213,7 +213,7 @@ public class TruckServiceImp implements TruckService {
         try {
             final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
-            truck.setProfileImage(staticResourcesUrl + "/" + truck.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            truck.setProfileImage(foodTrucksStaticRessiurcesUrl + truck.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
             foodTruckRepo.save(truck);
             return truck.getProfileImage();
         } catch (IOException e) {

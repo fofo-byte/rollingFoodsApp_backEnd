@@ -3,11 +3,16 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
 import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
+import com.example.rollingFoods.rollingFoodsApp.mappers.ItemMapper;
 import com.example.rollingFoods.rollingFoodsApp.models.Item;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.io.IOException;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +23,11 @@ public class ItemsController {
     // Injecting the ItemService
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
 
     // Get all items
     @GetMapping("/items")
@@ -39,10 +49,16 @@ public class ItemsController {
 
      */
     //
-    @PostMapping("/items")
-    public ResponseEntity <Item> createItem(@RequestBody ItemDTO itemDTO, @RequestParam("foodTruckId") Long foodTruckId) {
-        Item Item = itemService.addItemToFoodTruck(itemDTO, foodTruckId);
-        return ResponseEntity.ok(Item);
+    @PostMapping(value = "/items", consumes = "multipart/form-data")
+    public ResponseEntity <ItemDTO> createItem(
+            @RequestPart("itemDTO") MultipartFile itemDTO,
+            @RequestParam("foodTruckId") Long foodTruckId,
+            @RequestPart(value = "file" , required = false) MultipartFile file) throws IOException, java.io.IOException {
+
+        ItemDTO item = objectMapper.readValue(itemDTO.getInputStream(), ItemDTO.class);
+        final ItemDTO itemDTO1 = itemService.addItemToFoodTruck(item, foodTruckId, file);
+        return ResponseEntity.ok(itemDTO1);
+
     }
 
     //Get items by food truck id
