@@ -68,6 +68,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/isFoodTruckOpen").permitAll()
                         .requestMatchers(HttpMethod.POST, "/uploadImage").permitAll()
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/favorite").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/favorite").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/*/subscription/confirm").permitAll()
                         .requestMatchers(HttpMethod.POST, "/resend-verification-email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
