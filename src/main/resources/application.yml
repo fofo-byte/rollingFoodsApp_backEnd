@@ -10,11 +10,11 @@ spring:
     username: root
     password: ""
     driver-class-name: com.mysql.cj.jdbc.Driver
-  web:
-    resources:
-      static-locations:
-        - file:///D:/Projet rollingFoodsApp/pictures/foodTruck/
-        - file:///D:/Projet rollingFoodsApp/pictures/foods/
+  #web:
+    #resources:
+      #static-locations:
+        #- file:///D:/Projet rollingFoodsApp/pictures/foodTruck/
+        #- file:///D:/Projet rollingFoodsApp/pictures/foods/
 
 
 
