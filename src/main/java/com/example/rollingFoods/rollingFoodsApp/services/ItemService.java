@@ -1,9 +1,10 @@
 package com.example.rollingFoods.rollingFoodsApp.services;
 
 import com.example.rollingFoods.rollingFoodsApp.dto.ItemDTO;
-import com.example.rollingFoods.rollingFoodsApp.enums.ItemCategorie;
 import com.example.rollingFoods.rollingFoodsApp.models.Item;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ItemService {
@@ -21,9 +22,15 @@ public interface ItemService {
     public Item addItemToCategorie(ItemDTO itemDTO);
     //public List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId);
 
-    ItemDTO addItemToFoodTruck(ItemDTO itemDTO);
 
-    Item addItemToFoodTruck(ItemDTO itemDTO, Long foodTruckId);
+
+
+
+
+
+    //Add new item to food truck
+    ItemDTO addItemToFoodTruck(ItemDTO itemDTO, Long foodTruckId, MultipartFile file) throws IOException;
+
     List<ItemDTO> getItemsByFoodTruckId(Long foodTruckId);
     List<ItemDTO> getItemsByCategory(String category);
     public List<ItemDTO> getItemsByFoodTruckIdAndCategory(Long foodTruckId, String category);

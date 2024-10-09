@@ -10,9 +10,14 @@ spring:
     username: root
     password: ""
     driver-class-name: com.mysql.cj.jdbc.Driver
-  web:
-    resources:
-      static-locations: file:///D:/Projet rollingFoodsApp/pictures/foodTruck/
+  #web:
+    #resources:
+      #static-locations:
+        #- file:///D:/Projet rollingFoodsApp/pictures/foodTruck/
+        #- file:///D:/Projet rollingFoodsApp/pictures/foods/
+
+
+
 
   servlet:
     multipart:
@@ -61,6 +66,8 @@ spring:
 
   file:
     upload-dir: D:/Projet rollingFoodsApp/pictures
+  webflux:
+    static-path-pattern: /images/**
 
 static-resources-url: "http://10.0.2.2:8686/images"
 
