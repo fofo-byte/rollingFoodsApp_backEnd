@@ -69,4 +69,6 @@ public class FoodTruckOwnerController {
         logger.info("Is the user a food truck owner: {}" , isFoodTruckOwner);
         return ResponseEntity.ok(isFoodTruckOwner);
     }
+
+
 }
