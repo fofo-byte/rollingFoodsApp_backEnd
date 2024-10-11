@@ -2,6 +2,7 @@ package com.example.rollingFoods.rollingFoodsApp.controllers;
 
 import ch.qos.logback.core.util.StringUtil;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import com.example.rollingFoods.rollingFoodsApp.services.TruckService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -150,6 +151,12 @@ public class FoodTruckController {
             // Gérer les erreurs d'entrée/sortie
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    // Find food truck by food type
+    @GetMapping("/foodTruckByFoodType")
+    public ResponseEntity<List<FoodTruckDTO>> getFoodTruckByFoodType(@RequestParam("foodType") FoodType foodType) {
+        return ResponseEntity.ok(truckService.findByFoodType(foodType));
     }
 
 

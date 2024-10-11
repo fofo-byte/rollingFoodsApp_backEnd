@@ -1,6 +1,7 @@
 package com.example.rollingFoods.rollingFoodsApp.services;
 
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,8 @@ public interface TruckService {
     public boolean findStatusById(Long id);
     //Uplaod truck profile image
     public String uploadProfileImage(MultipartFile file, Long truckId) throws IOException;
+    //Find truck by food type
+    public List<FoodTruckDTO> findByFoodType(FoodType foodType);
 
 
 
