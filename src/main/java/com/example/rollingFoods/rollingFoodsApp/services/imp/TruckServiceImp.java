@@ -1,5 +1,6 @@
 package com.example.rollingFoods.rollingFoodsApp.services.imp;
 
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.mappers.FoodTruckMapper;
 import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
@@ -222,6 +223,13 @@ public class TruckServiceImp implements TruckService {
 
         }
 
+    }
+
+    //Find truck by food type
+    @Override
+    public List<FoodTruckDTO> findByFoodType(FoodType foodType) {
+        final List<FoodTruck> trucks = foodTruckRepo.findByFoodType(foodType);
+        return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
 }
 

@@ -22,8 +22,11 @@ public class FoodTruck {
     private Long id;
     private String name;
     private String description;
+    @ElementCollection(targetClass = FoodType.class)
     @Enumerated(EnumType.STRING)
-    private FoodType foodType;
+    @CollectionTable(name = "food_truck_food_types", joinColumns = @JoinColumn(name = "food_truck_id"))
+    @Column(name = "food_type")
+    private List<FoodType> foodType = new ArrayList<>();
     private String speciality;
     private String profileImage;
     private Coordinates coordinates;
@@ -57,24 +60,25 @@ public class FoodTruck {
     public FoodTruck() {
     }
 
-    public FoodTruck(Long id, String name, String description, FoodType foodType, String speciality, Coordinates coordinates, Float length, Float width, Boolean isOpen, LocalDate createdDate, FoodTruckOwner foodTruckOwner, Set<Menu> menus, List<Picture> pictures, String profileImage) {
+
+    public FoodTruck(Long id, String name, String description, List<FoodType> foodType, String speciality, String profileImage, Coordinates coordinates, Float length, Float width, Boolean isOpen, int rating, int ratingCount, LocalDate createdDate, FoodTruckOwner foodTruckOwner, Set<Menu> menus, List<Picture> pictures) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.foodType = foodType;
         this.speciality = speciality;
+        this.profileImage = profileImage;
         this.coordinates = coordinates;
         this.length = length;
         this.width = width;
         this.isOpen = isOpen;
+        this.rating = rating;
+        this.ratingCount = ratingCount;
         this.createdDate = createdDate;
         this.foodTruckOwner = foodTruckOwner;
         this.menus = menus;
         this.pictures = pictures;
-        this.profileImage = profileImage;
     }
-
-
 
     public Long getId() {
         return id;
@@ -156,11 +160,11 @@ public class FoodTruck {
         this.coordinates = coordinates;
     }
 
-    public FoodType getFoodType() {
+    public List<FoodType> getFoodType() {
         return foodType;
     }
 
-    public void setFoodType(FoodType foodType) {
+    public void setFoodType(List<FoodType> foodType) {
         this.foodType = foodType;
     }
 

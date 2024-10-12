@@ -1,8 +1,13 @@
 package com.example.rollingFoods.rollingFoodsApp.repositories;
 
+import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.FoodTruck;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+
+import java.util.List;
 
 public interface FoodTruckRepo extends JpaRepository<FoodTruck, Long> {
     //Find food truck by  food truck owner id
@@ -11,4 +16,7 @@ public interface FoodTruckRepo extends JpaRepository<FoodTruck, Long> {
     //Find food truck status by id
     @Query("SELECT f.isOpen FROM FoodTruck f WHERE f.id = :id")
     boolean findStatusById(Long id);
+    //Find foodTtype
+    @Query("SELECT f FROM FoodTruck f where :foodType MEMBER OF f.foodType")
+    List<FoodTruck> findByFoodType (@Param("foodType") FoodType foodType);
 }

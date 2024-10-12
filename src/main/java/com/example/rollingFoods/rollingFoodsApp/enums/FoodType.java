@@ -1,22 +1,18 @@
 package com.example.rollingFoods.rollingFoodsApp.enums;
 
 public enum FoodType {
-    FAST_FOOD ( "Fast Food" ),
-    MEXICAN(    "Mexican" ),
-    ITALIAN("Italian"),
+    BURGER("Burger"),
+    PIZZA("Pizza"),
+    FRIES("Frites"),
+    CHICKEN("Chicken"),
+    HOTDOG("Hotdog"),
     CHINESE("Chinese"),
-    JAPANESE("Japanese"),
-    INDIAN("Indian"),
-    MEDITERRANEAN("Mediterranean"),
-    AMERICAN("American"),
-    FRENCH("French"),
-    SPANISH("Spanish"),
-    GREEK("Greek"),
-    GERMAN("German"),
-    KOREAN("Korean"),
-    THAI("Thai"),
-    VIETNAMESE("Vietnamese"),
-    TURKISH("Turkish");
+    SUSHI("Sushi"),
+    PITTA("Pitta"),
+    DURUM("Durum"),
+    GLACES("Glaces");
+
+
 
 
     public final String value;
