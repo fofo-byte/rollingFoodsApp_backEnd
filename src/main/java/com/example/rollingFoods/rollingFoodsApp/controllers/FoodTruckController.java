@@ -155,8 +155,16 @@ public class FoodTruckController {
 
     // Find food truck by food type
     @GetMapping("/foodTruckByFoodType")
-    public ResponseEntity<List<FoodTruckDTO>> getFoodTruckByFoodType(@RequestParam("foodType") FoodType foodType) {
-        return ResponseEntity.ok(truckService.findByFoodType(foodType));
+    public ResponseEntity<List<FoodTruckDTO>> getFoodTruckByFoodType(@RequestParam("foodType") String foodType) {
+       try{
+           FoodType type = FoodType.valueOf(foodType.toUpperCase().replace(" ","_"));
+           List<FoodTruckDTO> foodTrucks = truckService.findByFoodType(type);
+           return new ResponseEntity<>(foodTrucks,HttpStatus.OK);
+       }catch (IllegalArgumentException e){
+           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+
+
     }
 
 
