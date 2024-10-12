@@ -4,6 +4,7 @@ import com.example.rollingFoods.rollingFoodsApp.enums.FoodType;
 import com.example.rollingFoods.rollingFoodsApp.models.embedded.Coordinates;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class FoodTruckDTO {
     private String description;
     private String speciality;
     private Coordinates coordinates;
-    private FoodType foodType;
+    private List<FoodType> foodType = new ArrayList<>();
     private String profileImage;
     private int rating;
     private int ratingCount;
@@ -84,11 +85,11 @@ public class FoodTruckDTO {
         this.speciality = speciality;
     }
 
-    public FoodType getFoodType() {
+    public List<FoodType> getFoodType() {
         return foodType;
     }
 
-    public void setFoodType(FoodType foodType) {
+    public void setFoodType(List<FoodType> foodType) {
         this.foodType = foodType;
     }
 

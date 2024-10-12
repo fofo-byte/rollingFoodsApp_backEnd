@@ -17,6 +17,6 @@ public interface FoodTruckRepo extends JpaRepository<FoodTruck, Long> {
     @Query("SELECT f.isOpen FROM FoodTruck f WHERE f.id = :id")
     boolean findStatusById(Long id);
     //Find foodTtype
-    @Query("SELECT f FROM FoodTruck f where f.foodType = :foodType")
+    @Query("SELECT f FROM FoodTruck f where :foodType MEMBER OF f.foodType")
     List<FoodTruck> findByFoodType (@Param("foodType") FoodType foodType);
 }
