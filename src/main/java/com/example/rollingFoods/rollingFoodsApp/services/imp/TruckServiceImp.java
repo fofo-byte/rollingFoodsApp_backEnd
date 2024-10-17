@@ -231,6 +231,13 @@ public class TruckServiceImp implements TruckService {
         final List<FoodTruck> trucks = foodTruckRepo.findByFoodType(foodType);
         return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
     }
+
+    //Find truck by name and food type and description
+    @Override
+    public List<FoodTruckDTO> findByNameAndFoodTypeAndDescription(String searchTerm) {
+        final List<FoodTruck> trucks = foodTruckRepo.findByNameAndFoodTypeAndDescription(searchTerm);
+        return trucks.stream().map(mapper::foodTruckToDto).collect(Collectors.toList());
+    }
 }
 
 

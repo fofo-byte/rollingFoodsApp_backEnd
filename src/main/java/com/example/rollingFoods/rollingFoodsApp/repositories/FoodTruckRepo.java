@@ -19,4 +19,8 @@ public interface FoodTruckRepo extends JpaRepository<FoodTruck, Long> {
     //Find foodTtype
     @Query("SELECT f FROM FoodTruck f where :foodType MEMBER OF f.foodType")
     List<FoodTruck> findByFoodType (@Param("foodType") FoodType foodType);
+    //Find food truck by name and food type and description
+    @Query("SELECT f from FoodTruck  f WHERE LOWER (f.name) LIKE LOWER(CONCAT('%', :searchTerm, '%') ) OR LOWER(f.description) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    List<FoodTruck> findByNameAndFoodTypeAndDescription(@Param("searchTerm") String searchTerm);
+
 }

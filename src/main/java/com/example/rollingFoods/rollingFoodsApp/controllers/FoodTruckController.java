@@ -167,6 +167,12 @@ public class FoodTruckController {
 
     }
 
+    // Find food truck by name and food type and description
+    @GetMapping("/searchFoodTrucks")
+    public ResponseEntity<List<FoodTruckDTO>> getFoodTruckByNameAndFoodTypeAndDescription(@RequestParam("searchTerm") String searchTerm) {
+        return ResponseEntity.ok(truckService.findByNameAndFoodTypeAndDescription(searchTerm));
+    }
+
 
 
 }
