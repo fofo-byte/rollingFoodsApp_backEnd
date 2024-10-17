@@ -42,7 +42,8 @@ public interface TruckService {
     public String uploadProfileImage(MultipartFile file, Long truckId) throws IOException;
     //Find truck by food type
     public List<FoodTruckDTO> findByFoodType(FoodType foodType);
-
+    //Find truck by name and food type and description
+    public List<FoodTruckDTO> findByNameAndFoodTypeAndDescription(String searchTerm);
 
 
 
