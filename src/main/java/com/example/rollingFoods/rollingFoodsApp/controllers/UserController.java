@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,9 +40,17 @@ public class UserController {
     @PostMapping("/signIn")
     ResponseEntity<String> signIn(@RequestBody @Validated UserCredentialDTO userCredentialDTO) {
         logger.info("Signing In User: {}", userCredentialDTO);
-        String signIn = userService.signIn(userCredentialDTO);
-        logger.info("User Signed In: {}", signIn);
-        return ResponseEntity.ok(signIn);
+        try {
+            String signIn = userService.signIn(userCredentialDTO);
+            logger.info("User Signed In: {}", signIn);
+            return ResponseEntity.ok(signIn);
+        } catch (BadCredentialsException e) {
+            logger.error("Invalid credentials: {}", userCredentialDTO);
+            throw new BadCredentialsException("Invalid email or password");
+        }catch (Exception e) {
+            logger.error("Error signing in user: {}", e.getMessage());
+            return ResponseEntity.status(500).body("Error signing in user");
+        }
     }
 
     //Test jwt token
@@ -80,12 +89,20 @@ public class UserController {
 
 
     }
-
+    //Validate account
     @GetMapping("/validateAccount")
     public ResponseEntity<String> validateToken(@RequestParam String token) {
         logger.info("Validating token: {}", token);
         userService.validateToken(token);
         return ResponseEntity.ok("Account is valid");
     }
+    //Update password
+    @PutMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody @Validated UserCredentialDTO userCredentialDTO) {
+        logger.info("Updating password: {}", userCredentialDTO);
+        userService.updatePassword(userCredentialDTO);
+        return ResponseEntity.ok("Password updated successfully");
+    }
+
 
 }

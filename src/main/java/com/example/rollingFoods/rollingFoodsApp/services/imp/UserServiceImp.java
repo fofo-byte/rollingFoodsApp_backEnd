@@ -124,5 +124,16 @@ public class UserServiceImp implements UserService {
         }
     }
 
+    @Override
+    public void updatePassword(UserCredentialDTO userCredentialDTO) {
+        UserCredential user = userCredentialRepo.findByEmail(userCredentialDTO.getEmail());
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        user.setPassword(passwordEncoder.encode(userCredentialDTO.getPassword()));
+        userCredentialRepo.save(user);
+
+    }
+
 
 }

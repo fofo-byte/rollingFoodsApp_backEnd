@@ -100,7 +100,7 @@ public class ItemServiceImp implements ItemService {
         final FoodTruck foodTruck = foodTruckRepo.findById(foodTruckId).orElseThrow(()->new RuntimeException("Food truck not found"));
         final Item item = new Item();
         item.setName(itemDTO.getName());
-        item.setDescription(itemDTO.getName());
+        item.setDescription(itemDTO.getDescription());
         item.setPrice(itemDTO.getPrice());
         item.setItemCategorie(itemDTO.getItemCategorie());
         item.setFoodTruck(foodTruck);
