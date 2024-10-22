@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,13 @@ public class FavoriteServiceImp implements FavoriteService {
         FoodTruck truck = foodTruckRepo.findById(foodTruckId).orElse(null);
         UserCredential user = userCredentialRepo.findById(userCredentialId).orElse(null);
         if (truck != null && user != null) {
+            //Verify if the favorite already exists
+            Optional<Favorite> favoriteOptional = Optional.ofNullable(favoriteRepo.findByUserCredentialAndFoodTruck(user, truck));
+            if (favoriteOptional.isPresent()) {
+                logger.info("Favorite already exists");
+                return favoriteOptional.get();
+            }
+            //Create the favorite
             Favorite favorite = new Favorite();
             favorite.setFoodTruck(truck);
             favorite.setUserCredential(user);

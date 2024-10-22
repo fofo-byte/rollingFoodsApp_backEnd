@@ -4,6 +4,7 @@ import com.example.rollingFoods.rollingFoodsApp.dto.FoodTruckDTO;
 import com.example.rollingFoods.rollingFoodsApp.models.Favorite;
 import com.example.rollingFoods.rollingFoodsApp.services.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +31,12 @@ public class FavoriteController {
     ResponseEntity <Favorite> addFavorite(@RequestParam Long userId,@RequestParam Long foodTruckId){
         if(userId == null || foodTruckId == null){
             return ResponseEntity.badRequest().build();
+        }
+        Favorite favorite = favoriteService.addFavorite(userId, foodTruckId);
+        if(favorite == null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }else {
-            return ResponseEntity.ok(favoriteService.addFavorite(userId, foodTruckId));
+            return ResponseEntity.ok(favorite);
         }
     }
 
