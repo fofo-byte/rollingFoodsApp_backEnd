@@ -64,7 +64,8 @@ public class EmailServiceImp implements EmailService {
         context.setVariable("companyName", foodTruckOwnerDTO.getCompanyName());
         context.setVariable("tva", foodTruckOwnerDTO.getTva());
         context.setVariable("street", foodTruckOwnerDTO.getAddress().getStreet());
-        context.setVariable("bankNumber", foodTruckOwnerDTO.getAddress().getStreetNumber());
+        context.setVariable("bankNumber", foodTruckOwnerDTO.getBankNumber());
+        context.setVariable("streetNumber", foodTruckOwnerDTO.getAddress().getStreetNumber());
         context.setVariable("city", foodTruckOwnerDTO.getAddress().getCity());
         context.setVariable("zipCode", foodTruckOwnerDTO.getAddress().getPostalCode());
         context.setVariable("country", foodTruckOwnerDTO.getAddress().getCountry());
@@ -90,7 +91,8 @@ public class EmailServiceImp implements EmailService {
             contextAdmin.setVariable("companyName", foodTruckOwnerDTO.getCompanyName());
             contextAdmin.setVariable("tva", foodTruckOwnerDTO.getTva());
             contextAdmin.setVariable("street", foodTruckOwnerDTO.getAddress().getStreet());
-            contextAdmin.setVariable("bankNumber", foodTruckOwnerDTO.getAddress().getStreetNumber());
+            contextAdmin.setVariable("streetNumber", foodTruckOwnerDTO.getAddress().getStreetNumber());
+            contextAdmin.setVariable("bankNumber", foodTruckOwnerDTO.getBankNumber());
             contextAdmin.setVariable("city", foodTruckOwnerDTO.getAddress().getCity());
             contextAdmin.setVariable("zipCode", foodTruckOwnerDTO.getAddress().getPostalCode());
             contextAdmin.setVariable("country", foodTruckOwnerDTO.getAddress().getCountry());

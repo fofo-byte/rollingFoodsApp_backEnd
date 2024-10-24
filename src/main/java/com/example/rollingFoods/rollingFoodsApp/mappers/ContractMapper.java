@@ -11,3 +11,4 @@ public interface ContractMapper {
     Contract dtoToContract(ContractDTO dto);
     ContractDTO contractToDto(Contract contract);
 }
+

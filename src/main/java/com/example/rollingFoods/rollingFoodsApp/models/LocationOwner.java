@@ -20,6 +20,7 @@ import java.util.Set;
 @Table(name = "location_owner")
 public class LocationOwner extends User {
 
+
     @Column(name = "bank_number")
     private String bankNumber;
 
