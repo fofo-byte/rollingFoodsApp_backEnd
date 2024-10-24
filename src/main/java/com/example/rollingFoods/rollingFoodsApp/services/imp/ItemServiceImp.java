@@ -58,11 +58,21 @@ public class ItemServiceImp implements ItemService {
     @Override
     public ItemDTO updateItem(Long id, ItemDTO itemDTO) {
         final Item item = itemRepo.findById(id).orElseThrow(()->new RuntimeException("Item not found"));
-        item.setName(itemDTO.getName());
-        item.setDescription(itemDTO.getDescription());
-        item.setPrice(itemDTO.getPrice());
-        item.setItemCategorie(itemDTO.getItemCategorie());
-        item.setPictureItem(itemDTO.getPictureItem());
+        if(itemDTO.getName() != null) {
+            item.setName(itemDTO.getName());
+        }
+        if(itemDTO.getDescription() != null) {
+            item.setDescription(itemDTO.getDescription());
+        }
+        if(itemDTO.getPrice() != null) {
+            item.setPrice(itemDTO.getPrice());
+        }
+        if(itemDTO.getItemCategorie() != null) {
+            item.setItemCategorie(itemDTO.getItemCategorie());
+        }
+        if(itemDTO.getPictureItem() != null) {
+            item.setPictureItem(itemDTO.getPictureItem());
+        }
         final Item updated = itemRepo.save(item);
         return mapper.itemToDto(updated);
     }
@@ -76,13 +86,7 @@ public class ItemServiceImp implements ItemService {
         return mapper.itemToDto(item);
     }
 
-    /*
-    public List<ItemDTO> getItemsByCategorieId(Long categorieId) {
-        final Set<Item> items = categorieRepo.findById(categorieId).orElseThrow(()->new RuntimeException("Categorie not found")).getItems();
-        return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
-    }
 
-     */
 
     @Override
     public Item addItemToCategorie(ItemDTO itemDTO) {
