@@ -1,39 +1,20 @@
-package com.example.rollingFoods.rollingFoodsApp.models;
+package com.example.rollingFoods.rollingFoodsApp.dto;
 
+public class LocationSiteDTO {
 
-import com.example.rollingFoods.rollingFoodsApp.models.embedded.Address;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-
-import java.util.Date;
-
-@Entity
-@Table(name = "location_site")
-public class LocationSite {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_location_site")
     private Long id;
     private String name;
     private String description;
     private Float length;
     private Float width;
-    private Address address;
+    private AddressDTO address;
     private String profileImage;
-    @Column(name = "create_at")
-    private Date createdDate;
 
-    //Relation ManyToOne avec Proprio car un locationSite appartient à un proprio
-    @ManyToOne
-    @JoinColumn(name = "id_location_owner")
-    @JsonBackReference
-    private LocationOwner locationOwner;
 
-    public LocationSite() {
+    public LocationSiteDTO() {
     }
 
-    public LocationSite(Long id, String name, String description, Float length, Float width, Address address, String profileImage) {
+    public LocationSiteDTO(Long id, String name, String description, Float length, Float width, AddressDTO address, String profileImage) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -44,7 +25,6 @@ public class LocationSite {
     }
 
     public Long getId() {
-
         return id;
     }
 
@@ -84,27 +64,13 @@ public class LocationSite {
         this.width = width;
     }
 
-    public Address getAddress() {
+    public AddressDTO getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDTO address) {
         this.address = address;
     }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocationOwner getProprio() {
-        return locationOwner;
-    }
-
-    public void setProprio(LocationOwner locationOwner) {this.locationOwner = locationOwner;}
 
     public String getProfileImage() {
         return profileImage;

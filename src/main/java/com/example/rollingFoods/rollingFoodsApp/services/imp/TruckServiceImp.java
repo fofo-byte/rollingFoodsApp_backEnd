@@ -35,7 +35,7 @@ public class TruckServiceImp implements TruckService {
     private String foodTruckPicturesLocation;
 
     @Value("http://10.0.2.2:8686/api/images/foodTruck/")
-    private String foodTrucksStaticRessiurcesUrl;
+    private String foodTrucksStaticResourcesUrl;
 
     @Autowired
     private UserCredentialRepo userCredentialRepo;
@@ -214,7 +214,7 @@ public class TruckServiceImp implements TruckService {
         try {
             final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
-            truck.setProfileImage(foodTrucksStaticRessiurcesUrl + truck.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            truck.setProfileImage(foodTrucksStaticResourcesUrl + truck.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
             foodTruckRepo.save(truck);
             return truck.getProfileImage();
         } catch (IOException e) {
