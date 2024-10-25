@@ -9,6 +9,7 @@ import com.example.rollingFoods.rollingFoodsApp.repositories.CategorieRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.FoodTruckRepo;
 import com.example.rollingFoods.rollingFoodsApp.repositories.ItemRepo;
 import com.example.rollingFoods.rollingFoodsApp.services.ItemService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class ItemServiceImp implements ItemService {
 
 
     @Override
-    public ItemDTO updateItem(Long id, ItemDTO itemDTO) {
+    public ItemDTO updateItem(Long id, ItemDTO itemDTO, MultipartFile file) throws IOException {
         final Item item = itemRepo.findById(id).orElseThrow(()->new RuntimeException("Item not found"));
         if(itemDTO.getName() != null) {
             item.setName(itemDTO.getName());
@@ -70,7 +71,10 @@ public class ItemServiceImp implements ItemService {
         if(itemDTO.getItemCategorie() != null) {
             item.setItemCategorie(itemDTO.getItemCategorie());
         }
-        if(itemDTO.getPictureItem() != null) {
+        if(file != null && !file.isEmpty()) {
+            String imageUrl = uploadProfileImage(file, item.getId());
+            item.setPictureItem(imageUrl);
+        }else if(itemDTO.getPictureItem() != null) {
             item.setPictureItem(itemDTO.getPictureItem());
         }
         final Item updated = itemRepo.save(item);
@@ -114,24 +118,11 @@ public class ItemServiceImp implements ItemService {
 
 
         if(file != null && !file.isEmpty()) {
-            final Path locationPath = Paths.get(foodItemsPicturesLocation, String.valueOf(foodTruckId));
-
-            if(!Files.exists(locationPath)) {
-                Files.createDirectory(locationPath);
-        }
-
-
-        try {
-            final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
-            savedItem.setPictureItem(foodItemsStacticRessourcesUrl + foodTruckId + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            String imageUrl = uploadProfileImage(file, savedItem.getId());
+            savedItem.setPictureItem(imageUrl);
             itemRepo.save(savedItem);
-            return mapper.itemToDto(savedItem);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException("Image upload failed");
         }
-    }
+
         return mapper.itemToDto(savedItem);
     }
     //Get items by food truck id
@@ -155,6 +146,32 @@ public class ItemServiceImp implements ItemService {
         ItemCategorie itemCategorieEnum = ItemCategorie.valueOf(category);  // Convertir la chaîne en enum
         List<Item> items = itemRepo.findByFoodTruckIdAndItemCategorie(foodTruckId, itemCategorieEnum);
         return items.stream().map(mapper::itemToDto).collect(Collectors.toList());
+    }
+
+    //Upload item image
+
+    public String uploadProfileImage(MultipartFile file, Long itemId) throws io.jsonwebtoken.io.IOException, java.io.IOException {
+
+        Item item = itemRepo.findById(itemId).orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
+
+        final Path locationPath = Paths.get(foodItemsPicturesLocation, String.valueOf(item.getId()));
+
+        if(!Files.exists(locationPath)) {
+            Files.createDirectory(locationPath);
+        }
+
+        try {
+            final Path location = locationPath.resolve(StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
+            item.setPictureItem(foodItemsStacticRessourcesUrl + item.getId() + "/" + StringUtils.cleanPath(file.getOriginalFilename()));
+            itemRepo.save(item);
+            return item.getPictureItem();
+        } catch (io.jsonwebtoken.io.IOException e) {
+            e.printStackTrace();
+            throw new io.jsonwebtoken.io.IOException("Image upload failed");
+
+        }
+
     }
 
 }

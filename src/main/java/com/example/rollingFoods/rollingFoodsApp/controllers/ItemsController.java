@@ -40,15 +40,8 @@ public class ItemsController {
         return ResponseEntity.ok(itemService.getItemById(itemId));
     }
 
-    /*
-    // Get items by category id
-    @GetMapping("/items/categorie/{categorieId}")
-    public ResponseEntity <List<ItemDTO>> getItemsByCategorieId(@PathVariable("categorieId") Long categorieId) {
-        return ResponseEntity.ok(itemService.getItemsByCategorieId(categorieId));
-    }
 
-     */
-    //
+    // Create item
     @PostMapping(value = "/items", consumes = "multipart/form-data")
     public ResponseEntity <ItemDTO> createItem(
             @RequestPart("itemDTO") MultipartFile itemDTO,
@@ -82,9 +75,9 @@ public class ItemsController {
     }
 
     // Update item
-    @PutMapping("/items/{id}")
-    public ResponseEntity <ItemDTO> updateItem(@PathVariable("id") Long itemId, @RequestBody ItemDTO itemDTO) {
-        return ResponseEntity.ok(itemService.updateItem(itemId,itemDTO));
+    @PutMapping(value = "/items/{id}", consumes = "multipart/form-data")
+    public ResponseEntity <ItemDTO> updateItem(@PathVariable("id") Long itemId, @RequestPart("itemDTO") ItemDTO itemDTO, @RequestPart (value="file") MultipartFile file) throws IOException, java.io.IOException {
+        return ResponseEntity.ok(itemService.updateItem(itemId, itemDTO, file));
     }
 
     // Delete item

@@ -15,7 +15,7 @@ public interface ItemService {
     public ItemDTO getItemById(Long id);
     public Item addItem(Item item);
     //Update item
-    public ItemDTO updateItem(Long id, ItemDTO itemDTO);
+    public ItemDTO updateItem(Long id, ItemDTO itemDTO, MultipartFile file) throws IOException;
     //Delete item
     public void deleteItem(Long id);
     //public List<ItemDTO> getItemsByCategorieId(Long categorieId);
