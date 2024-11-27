@@ -40,7 +40,7 @@ public class FoodTruckOwnerController {
     @PostMapping("/registerFoodTruckOwner")
      ResponseEntity<UserCredentialDTO> registerFoodTruckOwner(@RequestBody @Validated UserCredentialDTO UserCredentialDTO) {
         logger.info("Registering FoodTruckOwner: {}", UserCredentialDTO);
-        com.example.rollingFoods.rollingFoodsApp.dto.UserCredentialDTO registerFoodTruckOwner = foodTruckOwnerService.registerFoodTruckUser(UserCredentialDTO);
+        UserCredentialDTO registerFoodTruckOwner = foodTruckOwnerService.registerFoodTruckUser(UserCredentialDTO);
         return ResponseEntity.ok(registerFoodTruckOwner);
     }
 

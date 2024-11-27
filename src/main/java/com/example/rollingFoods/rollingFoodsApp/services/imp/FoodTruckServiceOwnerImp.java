@@ -61,7 +61,7 @@ public class FoodTruckServiceOwnerImp implements FoodTruckOwnerService {
     @Override
     public UserCredentialDTO registerFoodTruckUser(UserCredentialDTO userCredentialDTO) {
         if(userCredentialDTO.getPassword() ==  null || userCredentialDTO.getPassword().isEmpty()){
-            throw new RuntimeException("Password is required");
+            throw new RuntimeException("Password est obligatoire");
         }else{
             UserCredential user = mapperUser.dtoToUser(userCredentialDTO);
             user.setPassword(passwordEncoder.encode(user.getPassword()));

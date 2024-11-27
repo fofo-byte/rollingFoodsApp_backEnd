@@ -9,5 +9,5 @@ public interface UserService {
     public void updatePassword(UserCredentialDTO userCredentialDTO);
 
 
-
+    public void deleteAccount(Long userCredentialId);
 }
