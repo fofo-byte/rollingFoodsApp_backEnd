@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/signIn").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/deleteAccount").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/updatePassword").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/google-certificates").permitAll()
