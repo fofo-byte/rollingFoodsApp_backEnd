@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/google-certificates").permitAll()
                         .requestMatchers(HttpMethod.POST, "/registerFoodTruckOwner").permitAll()
                         .requestMatchers(HttpMethod.POST,"/addFoodTruck").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/foodTruck").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/foodTruck").permitAll()
                         .requestMatchers(HttpMethod.GET, "/foodTruck/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/findFoodTruckOwnerIdByUserCredentialId").permitAll()
                         .requestMatchers(HttpMethod.GET,"/foodTruckByOwnerId").permitAll()
