@@ -104,5 +104,13 @@ public class UserController {
         return ResponseEntity.ok("Password updated successfully");
     }
 
+    //Delete account
+    @DeleteMapping("/deleteAccount")
+    public ResponseEntity<String> deleteAccount(@RequestParam Long userCredentialId) {
+        logger.info("Deleting account: {}", userCredentialId);
+        userService.deleteAccount(userCredentialId);
+        return ResponseEntity.ok("Account deleted successfully");
+    }
+
 
 }

@@ -135,5 +135,11 @@ public class UserServiceImp implements UserService {
 
     }
 
+    @Override
+    public void deleteAccount(Long userCredentialId) {
+        UserCredential user = userCredentialRepo.findById(userCredentialId).orElseThrow(() -> new RuntimeException("User not found with id: " + userCredentialId));
+        userCredentialRepo.delete(user);
+    }
+
 
 }

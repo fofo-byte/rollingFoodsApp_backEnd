@@ -41,6 +41,10 @@ public class UserCredential implements UserDetails {
     @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Customer> customers = new HashSet<>();
 
+    //Relation OneToMany avec Favorite car un user peut avoir plusieurs favorite
+    @OneToMany(mappedBy = "userCredential", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Favorite> favorites = new HashSet<>();
+
 
 
 

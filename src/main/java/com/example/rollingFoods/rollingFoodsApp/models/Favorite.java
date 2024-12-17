@@ -11,7 +11,8 @@ public class Favorite {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "user_credential_id")
     private UserCredential userCredential;
 
     @ManyToOne
